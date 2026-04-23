@@ -79,16 +79,30 @@ export default function About() {
     />
   }
   secondContent={
-    <img
-      src="/images/showi.webp"
-      alt="Profile"
-      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-    />
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "grid",
+        placeItems: "center",
+        backgroundColor: "#0a0a0a"
+      }}
+    >
+      <p
+        style={{
+          fontWeight: 700,
+          fontSize: "1.5rem",
+          color: "#e8ff47"
+        }}
+      >
+        Showi 👨‍💻
+      </p>
+    </div>
   }
   gridSize={20}
   pixelColor="#e8ff47"
   animationStepDuration={0.5}
-  aspectRatio="0%"
+  aspectRatio="133%" // ✅ fix tinggi (3/4 ratio)
   className="w-full h-full"
 />
 </motion.div>
