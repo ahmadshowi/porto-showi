@@ -1,7 +1,7 @@
 'use client'
 import { motion, AnimatePresence } from 'framer-motion'
 import { RevealUp } from './RevealUp'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const projects = [
   {
@@ -33,6 +33,19 @@ const projects = [
 
 export default function Projects() {
   const [active, setActive] = useState<null | typeof projects[0]>(null)
+
+  // 🔥 LOCK BODY SCROLL
+  useEffect(() => {
+    if (active) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'auto'
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto'
+    }
+  }, [active])
 
   return (
     <section id="projects" className="py-32 px-6 bg-surface/20">
@@ -86,14 +99,14 @@ export default function Projects() {
 
               <motion.div
                 layoutId={`card-${active.number}`}
-                className="bg-surface w-full max-w-3xl max-h-[90vh] overflow-hidden border border-border relative"
+                className="bg-surface w-full max-w-3xl max-h-[90vh] border border-border relative flex flex-col"
                 onClick={(e) => e.stopPropagation()}
                 initial={{ scale: 0.9 }}
                 animate={{ scale: 1 }}
                 exit={{ scale: 0.9 }}
               >
 
-                {/* CLOSE */}
+                {/* CLOSE BUTTON */}
                 <button
                   onClick={() => setActive(null)}
                   className="absolute top-4 right-4 text-text-dim hover:text-white text-xl z-10"
@@ -101,8 +114,8 @@ export default function Projects() {
                   ✕
                 </button>
 
-                {/* SCROLL AREA */}
-                <div className="overflow-y-auto max-h-[90vh]">
+                {/* SCROLL AREA (INI KUNCI NYA) */}
+                <div className="overflow-y-auto flex-1">
 
                   {/* IMAGE */}
                   <motion.img
