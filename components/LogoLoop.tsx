@@ -1,17 +1,30 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+
+type Logo = {
+  node: React.ReactNode
+  title?: string
+  href?: string
+}
+
+type Props = {
+  logos: Logo[]
+  speed?: number
+  gap?: number
+  direction?: 'left' | 'right'
+  pauseOnHover?: boolean
+}
 
 export default function LogoLoop({
   logos,
   speed = 60,
   gap = 40,
-}: {
-  logos: { node: React.ReactNode; title?: string; href?: string }[]
-  speed?: number
-  gap?: number
-}) {
+  direction = 'left',
+  pauseOnHover = true,
+}: Props) {
   const trackRef = useRef<HTMLDivElement>(null)
+  const [isPaused, setIsPaused] = useState(false)
 
   useEffect(() => {
     let animationFrame: number
@@ -20,21 +33,36 @@ export default function LogoLoop({
     const animate = () => {
       if (!trackRef.current) return
 
-      x -= speed * 0.01
-      if (Math.abs(x) >= trackRef.current.scrollWidth / 2) {
-        x = 0
+      if (!isPaused) {
+        const move = speed * 0.01
+        x += direction === 'left' ? -move : move
+
+        const width = trackRef.current.scrollWidth / 2
+
+        if (direction === 'left' && Math.abs(x) >= width) {
+          x = 0
+        }
+
+        if (direction === 'right' && x >= 0) {
+          x = -width
+        }
+
+        trackRef.current.style.transform = `translateX(${x}px)`
       }
 
-      trackRef.current.style.transform = `translateX(${x}px)`
       animationFrame = requestAnimationFrame(animate)
     }
 
     animate()
     return () => cancelAnimationFrame(animationFrame)
-  }, [speed])
+  }, [speed, direction, isPaused])
 
   return (
-    <div className="overflow-hidden w-full">
+    <div
+      className="overflow-hidden w-full"
+      onMouseEnter={() => pauseOnHover && setIsPaused(true)}
+      onMouseLeave={() => pauseOnHover && setIsPaused(false)}
+    >
       <div
         ref={trackRef}
         className="flex items-center w-max"

@@ -45,7 +45,7 @@ export default function Hero() {
   return (
     <section ref={ref} id="hero" className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-16">
 
-      {/* Background blur circles */}
+      {/* Background blur */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
           className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full"
@@ -58,7 +58,7 @@ export default function Hero() {
         />
       </div>
 
-      {/* MAIN CONTENT */}
+      {/* CONTENT */}
       <motion.div
         className="relative z-10 max-w-5xl mx-auto px-6 text-center"
         style={{ opacity }}
@@ -99,7 +99,7 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* TECH STACK LOOP */}
+      {/* LOGO LOOP */}
       <div className="relative z-10 w-full border-t border-border/50 py-8 bg-surface/40 backdrop-blur-md">
 
         <p className="text-xs font-mono text-text-dim text-center mb-4 tracking-widest">
@@ -109,12 +109,7 @@ export default function Hero() {
         <LogoLoop
           logos={techLogos}
           speed={60}
-          direction="left"
-          logoHeight={40}
           gap={50}
-          scaleOnHover
-          fadeOut
-          fadeOutColor="#0b0b0b"
         />
       </div>
     </section>
