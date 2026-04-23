@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import './Folder.css'
 
 const darkenColor = (hex: string, percent: number) => {
@@ -30,20 +29,20 @@ export default function Folder({
   size = 1,
   items = [],
   className = '',
+  isOpen = false,
   onClick
 }: {
   color?: string
   size?: number
   items?: React.ReactNode[]
   className?: string
+  isOpen?: boolean
   onClick?: () => void
 }) {
   const maxItems = 3
   const papers = [...items].slice(0, maxItems)
 
   while (papers.length < maxItems) papers.push(null)
-
-  const [open, setOpen] = useState(false)
 
   const folderBackColor = darkenColor(color, 0.08)
 
@@ -55,12 +54,9 @@ export default function Folder({
   return (
     <div style={{ transform: `scale(${size})` }} className={className}>
       <div
-        className={`folder ${open ? 'open' : ''}`}
+        className={`folder ${isOpen ? 'open' : ''}`}
         style={folderStyle}
-        onClick={() => {
-          setOpen(!open)
-          onClick?.()
-        }}
+        onClick={onClick}
       >
         <div className="folder__back">
           {papers.map((item, i) => (

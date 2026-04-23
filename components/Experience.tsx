@@ -74,15 +74,18 @@ export default function Experience() {
           {folders.map((folder, i) => (
             <div key={i}>
               <Folder
-                size={1.5}
-                color="#e8ff47"
-                items={[
-                  <span key="1">{folder.title}</span>,
-                  <span key="2">{folder.items.length} items</span>,
-                  <span key="3">Open</span>
-                ]}
-                onClick={() => setActiveFolder(i)}
-              />
+  size={1.5}
+  color="#e8ff47"
+  isOpen={activeFolder === i}
+  onClick={() =>
+    setActiveFolder(activeFolder === i ? null : i)
+  }
+  items={[
+    <span key="1">{folder.title}</span>,
+    <span key="2">{folder.items.length} items</span>,
+    <span key="3">Open</span>
+  ]}
+/>
 
               <p className="mt-3 text-sm text-text-dim">
                 {folder.title}
