@@ -27,8 +27,12 @@ export default function LogoLoop({
   const [isPaused, setIsPaused] = useState(false)
 
   useEffect(() => {
+    if (!trackRef.current) return
+
     let animationFrame: number
-    let x = 0 // ✅ start dari kiri (normal)
+    let x = 0
+
+    const width = trackRef.current.scrollWidth / 2
 
     const animate = () => {
       if (!trackRef.current) return
@@ -37,14 +41,10 @@ export default function LogoLoop({
         const move = speed * 0.01
         x += direction === 'left' ? -move : move
 
-        const width = trackRef.current.scrollWidth / 2
-
-        // loop kiri
         if (direction === 'left' && x <= -width) {
           x = 0
         }
 
-        // loop kanan
         if (direction === 'right' && x >= 0) {
           x = -width
         }
