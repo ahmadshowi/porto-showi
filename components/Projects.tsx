@@ -7,47 +7,55 @@ const projects = [
   {
     number: '01',
     title: 'E-Commerce Platform',
-    desc: 'Full-featured online store with real-time inventory, payment gateway, and admin dashboard. Handles 500+ daily transactions.',
+    desc: 'Full-featured online store with real-time inventory, payment gateway, and admin dashboard.',
     tags: ['Next.js', 'Stripe', 'PostgreSQL', 'Redis'],
     link: '#',
     featured: true,
     color: '#e8ff47',
+    image: '/images/project1.jpg',
   },
   {
     number: '02',
     title: 'Task Management SaaS',
-    desc: 'Collaborative project management tool with real-time updates via WebSockets, drag-and-drop, and team analytics.',
+    desc: 'Collaborative project management tool with real-time updates and analytics.',
     tags: ['React', 'Node.js', 'Socket.io', 'MongoDB'],
     link: '#',
     featured: true,
     color: '#3effee',
+    image: '/images/project2.jpg',
   },
   {
     number: '03',
     title: 'AI Content Generator',
-    desc: 'Web app integrating GPT API for automated content creation with custom templates, editing tools, and export options.',
+    desc: 'Web app integrating GPT API for automated content creation.',
     tags: ['Next.js', 'OpenAI API', 'Prisma', 'TailwindCSS'],
     link: '#',
     featured: false,
     color: '#ff6b6b',
+    image: '/images/project3.jpg',
   },
   {
     number: '04',
     title: 'Analytics Dashboard',
-    desc: 'Real-time data visualization platform with customizable widgets, date filtering, and CSV export capabilities.',
+    desc: 'Real-time data visualization platform with customizable widgets.',
     tags: ['React', 'Recharts', 'FastAPI', 'PostgreSQL'],
     link: '#',
     featured: false,
     color: '#b39ddb',
+    image: '/images/project4.jpg',
   },
 ]
 
 function ProjectCard({ project, index }: { project: typeof projects[0]; index: number }) {
   const ref = useRef<HTMLDivElement>(null)
+
+  // mouse tilt
   const x = useMotionValue(0)
   const y = useMotionValue(0)
+
   const rotateX = useTransform(y, [-100, 100], [6, -6])
   const rotateY = useTransform(x, [-100, 100], [-6, 6])
+
   const springX = useSpring(rotateX, { stiffness: 200, damping: 20 })
   const springY = useSpring(rotateY, { stiffness: 200, damping: 20 })
 
@@ -69,73 +77,82 @@ function ProjectCard({ project, index }: { project: typeof projects[0]; index: n
       className="relative group cursor-pointer"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
       viewport={{ once: true }}
       style={{ perspective: 1000, rotateX: springX, rotateY: springY }}
       onMouseMove={handleMouse}
       onMouseLeave={resetMouse}
     >
-      <div className="border border-border bg-surface/50 p-8 h-full hover:border-opacity-50 transition-all duration-300 relative overflow-hidden"
-        style={{ ['--accent-color' as string]: project.color }}
-      >
-        {/* Color accent on hover */}
-        <motion.div
-          className="absolute top-0 left-0 right-0 h-0.5 origin-left"
-          style={{ background: project.color, scaleX: 0 }}
-          whileHover={{ scaleX: 1 }}
-          transition={{ duration: 0.3 }}
-        />
+      <a href={project.link} target="_blank">
+        <div className="relative h-full overflow-hidden border border-border bg-surface">
 
-        {/* Project number */}
-        <div
-          className="font-display text-7xl font-bold mb-4 leading-none select-none transition-all duration-300"
-          style={{ color: project.color, opacity: 0.15 }}
-        >
-          {project.number}
-        </div>
+          {/* IMAGE (hidden → reveal on hover) */}
+          <motion.div
+            className="absolute inset-0 z-0"
+            initial={{ scale: 1.2, opacity: 0 }}
+            whileHover={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <img
+              src={project.image}
+              alt={project.title}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black/60" />
+          </motion.div>
 
-        <div className="flex items-start justify-between gap-4 mb-4">
-          <h3 className="display-font text-xl font-bold text-text group-hover:text-white transition-colors">
-            {project.title}
-          </h3>
-          {project.featured && (
-            <span
-              className="font-mono text-[0.6rem] tracking-widest uppercase px-2 py-0.5 shrink-0"
-              style={{ color: project.color, border: `1px solid ${project.color}40` }}
+          {/* NUMBER */}
+          <div
+            className="absolute top-4 right-4 text-6xl font-bold opacity-10 z-10"
+            style={{ color: project.color }}
+          >
+            {project.number}
+          </div>
+
+          {/* CONTENT */}
+          <div className="relative z-10 p-6 h-full flex flex-col justify-end">
+
+            <motion.div
+              initial={{ y: 30, opacity: 0 }}
+              whileHover={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.4 }}
+              className="translate-y-6 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all"
             >
-              Featured
-            </span>
-          )}
+              <h3 className="text-xl font-bold text-white mb-2">
+                {project.title}
+              </h3>
+
+              <p className="text-xs text-white/70 mb-4">
+                {project.desc}
+              </p>
+
+              <div className="flex flex-wrap gap-2 mb-4">
+                {project.tags.map(tag => (
+                  <span
+                    key={tag}
+                    className="text-[10px] text-white/60 border border-white/20 px-2 py-0.5"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <span className="text-sm text-white">
+                View Project →
+              </span>
+            </motion.div>
+          </div>
+
+          {/* TOP BORDER ACCENT */}
+          <motion.div
+            className="absolute top-0 left-0 right-0 h-[2px]"
+            style={{ background: project.color, scaleX: 0 }}
+            whileHover={{ scaleX: 1 }}
+            transition={{ duration: 0.3 }}
+          />
+
         </div>
-
-        <p className="font-mono text-xs text-text-dim leading-relaxed mb-6">{project.desc}</p>
-
-        <div className="flex flex-wrap gap-2 mb-6">
-          {project.tags.map(tag => (
-            <span key={tag} className="font-mono text-[0.65rem] text-text-dim border border-border px-2 py-0.5">
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <motion.a
-          href={project.link}
-          className="font-mono text-xs tracking-widest uppercase flex items-center gap-2 transition-colors duration-200"
-          style={{ color: project.color }}
-          whileHover={{ x: 4 }}
-        >
-          View Project
-          <span>→</span>
-        </motion.a>
-
-        {/* Hover glow */}
-        <motion.div
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-500"
-          style={{
-            background: `radial-gradient(circle at 50% 50%, ${project.color}08 0%, transparent 70%)`,
-          }}
-        />
-      </div>
+      </a>
     </motion.div>
   )
 }
@@ -147,6 +164,7 @@ export default function Projects() {
         <RevealUp>
           <p className="section-label mb-4">04 — Projects</p>
         </RevealUp>
+
         <RevealUp delay={0.1}>
           <h2 className="display-font text-5xl md:text-6xl font-bold text-text mb-16">
             Selected <span className="text-accent">Work</span>
@@ -167,8 +185,7 @@ export default function Projects() {
               className="font-mono text-sm text-text-dim border border-border px-8 py-4 inline-flex items-center gap-3 hover:border-accent hover:text-accent transition-all duration-300"
               whileHover={{ scale: 1.02 }}
             >
-              View all on GitHub
-              <span>→</span>
+              View all on GitHub →
             </motion.a>
           </div>
         </RevealUp>
