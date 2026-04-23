@@ -2,16 +2,14 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { RevealUp } from './RevealUp'
-import { FaLinkedin } from 'react-icons/fa'
 import ContactModal from '@/components/ContactModal'
 import {
   SiGithub,
-  SiLinkedin,
   SiInstagram,
   SiWhatsapp,
-  SiGmail
 } from 'react-icons/si'
-
+import { FaLinkedin } from 'react-icons/fa'
+import { MdEmail } from 'react-icons/md'
 const socials = [
   { label: 'GitHub', href: 'https://github.com/ahmadshowi', icon: SiGithub },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/ahmadshowi', icon: SiLinkedin },
