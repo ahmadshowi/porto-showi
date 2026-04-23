@@ -12,7 +12,7 @@ import { FaLinkedin } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
 const socials = [
   { label: 'GitHub', href: 'https://github.com/ahmadshowi', icon: SiGithub },
-  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/ahmadshowi', icon: FaLinkedin }
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/ahmadshowi', icon: FaLinkedin },
   { label: 'Instagram', href: 'https://www.instagram.com/ahmadshowisf/', icon: SiInstagram },
   { label: 'Email', href: 'mailto:ahmadshowi15@gmail.com', icon: MdEmail },
 ]
