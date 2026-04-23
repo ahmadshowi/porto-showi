@@ -1,7 +1,7 @@
 'use client'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef, useEffect, useState } from 'react'
-import LogoLoop from './LogoLoop'
+import LogoLoop from '@/components/LogoLoop'
 import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss } from 'react-icons/si'
 
 const roles = ['Full Stack Developer', 'UI/UX Enthusiast', 'React Developer', 'Problem Solver']
