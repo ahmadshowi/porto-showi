@@ -1,5 +1,6 @@
 'use client'
 import Image from "next/image"
+import PixelTransition from '@/components/PixelTransition'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { RevealUp } from './RevealUp'
@@ -13,13 +14,39 @@ export default function About() {
     <section ref={ref} id="about" className="relative py-32 px-6 overflow-hidden">
       {/* Parallax BG text */}
       <motion.div
-        className="absolute inset-0 flex items-center pointer-events-none select-none overflow-hidden"
-        style={{ x }}
+  className="relative aspect-[3/4] max-w-sm mx-auto border border-border overflow-hidden"
+  whileHover={{ scale: 1.01 }}
+  transition={{ duration: 0.3 }}
+>
+  <PixelTransition
+    firstContent={
+      <img
+        src="/images/showi.webp"
+        alt="Profile"
+        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+      />
+    }
+    secondContent={
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          display: "grid",
+          placeItems: "center",
+          backgroundColor: "#0a0a0a"
+        }}
       >
-        <span className="font-display text-[18vw] font-bold text-white/[0.015] whitespace-nowrap">
-          ABOUT ME
-        </span>
-      </motion.div>
+        <p style={{ fontWeight: 700, fontSize: "1.5rem", color: "#e8ff47" }}>
+          Showi 👨‍💻
+        </p>
+      </div>
+    }
+    gridSize={18}
+    pixelColor="#e8ff47"
+    animationStepDuration={0.5}
+    className="w-full h-full"
+  />
+</motion.div>
 
       <div className="relative z-10 max-w-6xl mx-auto">
         <RevealUp>
