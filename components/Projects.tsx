@@ -6,21 +6,21 @@ import { useState, useEffect } from 'react'
 const projects = [
   {
     number: '01',
-    title: 'E-Commerce Platform',
-    desc: 'Full-featured online store with real-time inventory and payment integration.',
+    title: 'Rental Mobil Transbulevard',
+    desc: 'Membuat website untuk rental mobil menggunakan Next.js, Tailwind CSS, dan Firebase. Fitur termasuk pemesanan online, manajemen armada, dan',
     tags: ['Next.js', 'Stripe', 'PostgreSQL'],
     link: '#',
     color: '#e8ff47',
     images: [
-      '/images/transbulevard.png',
+      '/images/mockup_rental.png',
       '/images/project1-2.jpg',
       '/images/project1-3.jpg',
     ],
   },
   {
     number: '02',
-    title: 'Task Management SaaS',
-    desc: 'Collaborative tool with real-time updates and analytics.',
+    title: 'Technical Documentation App Stream',
+    desc: 'Creating comprehensive technical documentation for a stream platform, built with React, Node.js, and MongoDB.',
     tags: ['React', 'Node.js', 'MongoDB'],
     link: '#',
     color: '#3effee',

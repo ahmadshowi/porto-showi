@@ -9,16 +9,16 @@ const folders = [
     title: 'Company',
     items: [
       {
-        title: 'Tech Startup',
-        period: '2023 — Present',
+        title: 'AirNav Indonesia',
+        period: '2025 — 2026',
         image: '/images/project1.webp',
-        desc: 'Build SaaS platform with React & Next.js'
+        desc: 'Bussines Analyst For Application Internal Company'
       },
       {
-        title: 'Corporate App',
-        period: '2022',
+        title: 'AirNav Indonesia',
+        period: '2025 — 2026',
         image: '/images/project2.webp',
-        desc: 'Dashboard internal company'
+        desc: 'System Analyst For Application Internal Company'
       }
     ]
   },
@@ -26,10 +26,10 @@ const folders = [
     title: 'Freelance',
     items: [
       {
-        title: 'Landing Page',
-        period: '2023',
+        title: 'Rental Mobil Transbulevard',
+        period: '2025',
         image: '/images/project3.webp',
-        desc: 'Modern UI landing page'
+        desc: 'Membuat website untuk rental mobil menggunakan Next.js, Tailwind CSS, dan Firebase. Fitur termasuk pemesanan online, manajemen armada, dan'
       }
     ]
   },
@@ -37,16 +37,16 @@ const folders = [
     title: 'Projects',
     items: [
       {
-        title: 'Portfolio',
-        period: '2024',
+        title: 'Sistem Manajemen Bengkel HS Motor',
+        period: '2025',
         image: '/images/project4.webp',
-        desc: 'Personal website'
+        desc: 'Membuat aplikasi manajemen bengkel menggunakan React, Node.js, dan MongoDB. Fitur termasuk penjadwalan servis, manajemen pelanggan, dan laporan keuangan.'
       },
       {
-        title: 'E-Commerce',
-        period: '2023',
+        title: 'Sistem Penunjang Keputusan Dana Bansos',
+        period: '2025',
         image: '/images/project5.webp',
-        desc: 'Fullstack shop app'
+        desc: 'Memuat aplikasi penunjang keputusan untuk pendistribusian dana bansos menggunakan React, Express.js, dan PostgreSQL. Fitur termasuk analisis data penerima, visualisasi distribusi, dan rekomendasi alokasi dana.'
       }
     ]
   }
