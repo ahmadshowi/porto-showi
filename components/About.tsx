@@ -13,40 +13,6 @@ export default function About() {
   return (
     <section ref={ref} id="about" className="relative py-32 px-6 overflow-hidden">
       {/* Parallax BG text */}
-      <motion.div
-  className="relative aspect-[3/4] max-w-sm mx-auto border border-border overflow-hidden"
-  whileHover={{ scale: 1.01 }}
-  transition={{ duration: 0.3 }}
->
-  <PixelTransition
-    firstContent={
-      <img
-        src="/images/showi.webp"
-        alt="Profile"
-        style={{ width: "100%", height: "100%", objectFit: "cover" }}
-      />
-    }
-    secondContent={
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "grid",
-          placeItems: "center",
-          backgroundColor: "#0a0a0a"
-        }}
-      >
-        <p style={{ fontWeight: 700, fontSize: "1.5rem", color: "#e8ff47" }}>
-          Showi 👨‍💻
-        </p>
-      </div>
-    }
-    gridSize={18}
-    pixelColor="#e8ff47"
-    animationStepDuration={0.5}
-    className="w-full h-full"
-  />
-</motion.div>
 
       <div className="relative z-10 max-w-6xl mx-auto">
         <RevealUp>
@@ -104,22 +70,30 @@ export default function About() {
   whileHover={{ scale: 1.01 }}
   transition={{ duration: 0.3 }}
 >
-  <Image
-    src="/images/showi.webp"
-    alt="Profile"
-    fill
-    className="object-cover"
-  />
+  <PixelTransition
+  firstContent={
+    <img
+      src="/images/showi.webp"
+      alt="Profile"
+      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+    />
+  }
+  secondContent={
+    <img
+      src="/images/showi.webp"
+      alt="Profile"
+      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+    />
+  }
+  gridSize={20}
+  pixelColor="#e8ff47"
+  animationStepDuration={0.5}
+  aspectRatio="0%"
+  className="w-full h-full"
+/>
 </motion.div>
 
               {/* Floating badge */}
-              <motion.div
-                className="absolute -bottom-4 -right-4 bg-accent text-bg px-4 py-2 font-mono text-xs font-bold"
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                Open to Work ✦
-              </motion.div>
 
               {/* Decorative dot grid */}
               <div
