@@ -79,7 +79,7 @@ export default function About() {
               >
                 {/* Placeholder avatar */}
                 <Image
-  src="Public/Images/showi.webp"
+  src="/images/showi.webp"
   alt="Profile"
   fill
   className="object-cover"
