@@ -28,7 +28,7 @@ export default function LogoLoop({
 
   useEffect(() => {
     let animationFrame: number
-    let x = 0
+    let x = 0 // ✅ start dari kiri (normal)
 
     const animate = () => {
       if (!trackRef.current) return
@@ -39,10 +39,12 @@ export default function LogoLoop({
 
         const width = trackRef.current.scrollWidth / 2
 
-        if (direction === 'left' && Math.abs(x) >= width) {
+        // loop kiri
+        if (direction === 'left' && x <= -width) {
           x = 0
         }
 
+        // loop kanan
         if (direction === 'right' && x >= 0) {
           x = -width
         }
@@ -69,9 +71,15 @@ export default function LogoLoop({
         style={{ gap: `${gap}px` }}
       >
         {[...logos, ...logos].map((logo, i) => (
-          <div key={i} className="flex items-center justify-center text-3xl">
+          <div key={i} className="flex items-center justify-center text-4xl">
             {logo.href ? (
-              <a href={logo.href} target="_blank" rel="noopener noreferrer">
+              <a
+                href={logo.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={logo.title}
+                className="opacity-70 hover:opacity-100 hover:scale-110 transition"
+              >
                 {logo.node}
               </a>
             ) : (
