@@ -34,7 +34,10 @@ export default function Hero() {
   }, [displayed, isDeleting, roleIndex])
 
   return (
-    <section ref={ref} id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+    <section ref={ref}
+  id="hero"
+  className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 pb-32"
+>
       {/* Animated background circles */}
       <div className="absolute inset-0 pointer-events-none">
         <motion.div
@@ -70,7 +73,7 @@ export default function Hero() {
       </div>
 
       <motion.div
-        className="relative z-10 max-w-5xl mx-auto px-6 text-center"
+        className="relative z-20 max-w-5xl mx-auto px-6 text-center"
         style={{ opacity }}
       >
         {/* Label */}
@@ -168,7 +171,7 @@ export default function Hero() {
       </motion.div>
 
       {/* Marquee */}
-      <div className="absolute bottom-0 left-0 right-0 overflow-hidden border-t border-border py-3 bg-surface/50">
+      <div className="absolute bottom-0 left-0 right-0 z-0 overflow-hidden border-t border-border py-3 bg-surface/50">
         <div className="marquee-track flex gap-16 whitespace-nowrap w-max">
           {[...Array(2)].map((_, i) => (
             <span key={i} className="flex gap-16 items-center">
