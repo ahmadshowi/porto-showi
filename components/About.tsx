@@ -73,37 +73,17 @@ export default function About() {
             <div className="relative">
               {/* Photo frame */}
               <motion.div
-                className="relative aspect-[3/4] max-w-sm mx-auto bg-surface border border-border overflow-hidden"
-                whileHover={{ scale: 1.01 }}
-                transition={{ duration: 0.3 }}
-              >
-                {/* Placeholder avatar */}
-                <Image
-  src="/images/showi.webp"
-  alt="Profile"
-  fill
-  className="object-cover"
-/>
-                  <div className="text-center">
-                    <div className="w-24 h-24 rounded-full bg-accent/20 border-2 border-accent/40 mx-auto mb-4 flex items-center justify-center">
-                      <span className="font-display text-4xl font-bold text-accent">A</span>
-                    </div>
-                    <p className="font-mono text-xs text-text-dim">[ your photo here ]</p>
-                  </div>
-                </div>
-
-                {/* Scanlines overlay */}
-                <div
-                  className="absolute inset-0 pointer-events-none opacity-10"
-                  style={{
-                    backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.8) 2px, rgba(0,0,0,0.8) 4px)',
-                  }}
-                />
-
-                {/* Corner accent */}
-                <div className="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-accent" />
-                <div className="absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 border-accent" />
-              </motion.div>
+  className="relative aspect-[3/4] max-w-sm mx-auto bg-surface border border-border overflow-hidden"
+  whileHover={{ scale: 1.01 }}
+  transition={{ duration: 0.3 }}
+>
+  <Image
+    src="/images/showi.webp"
+    alt="Profile"
+    fill
+    className="object-cover"
+  />
+</motion.div>
 
               {/* Floating badge */}
               <motion.div

@@ -92,7 +92,7 @@ export default function Hero() {
             transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1], delay: 0.3 }}
           >
             Hi, I'm{' '}
-            <span className="text-accent glitch" data-text="Alex">Showi</span>
+            <span className="text-accent glitch" data-text="Showi">Showi</span>
           </motion.h1>
         </div>
 
