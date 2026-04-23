@@ -11,16 +11,15 @@ import {
   SiJavascript,
   SiTailwindcss,
   SiHtml5,
-  SiCss3,
   SiPhp,
   SiLaravel,
   SiMysql,
   SiPostgresql,
   SiMongodb,
   SiFirebase,
-  SiNodeDotJs,
+  SiNodedotjs,
   SiExpress,
-  SiJava,
+  SiOpenjdk,
   SiPython,
   SiDocker,
   SiGit,
@@ -44,14 +43,13 @@ const techLogos = [
   { node: <SiJavascript />, title: 'JavaScript', href: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
   { node: <SiTailwindcss />, title: 'Tailwind CSS', href: 'https://tailwindcss.com' },
   { node: <SiHtml5 />, title: 'HTML5', href: 'https://developer.mozilla.org/en-US/docs/Web/HTML' },
-  { node: <SiCss3 />, title: 'CSS3', href: 'https://developer.mozilla.org/en-US/docs/Web/CSS' },
-
+  
   // Backend
-  { node: <SiNodeDotJs />, title: 'Node.js', href: 'https://nodejs.org' },
+  { node: <SiNodedotjs />, title: 'Node.js', href: 'https://nodejs.org' },
   { node: <SiExpress />, title: 'Express.js', href: 'https://expressjs.com' },
   { node: <SiPhp />, title: 'PHP', href: 'https://www.php.net' },
   { node: <SiLaravel />, title: 'Laravel', href: 'https://laravel.com' },
-  { node: <SiJava />, title: 'Java', href: 'https://www.java.com' },
+  { node: <SiOpenjdk />, title: 'Java', href: 'https://www.java.com' },
   { node: <SiPython />, title: 'Python', href: 'https://www.python.org' },
 
   // Database
