@@ -82,7 +82,7 @@ export default function Hero() {
 
   useEffect(() => {
     const current = roles[roleIndex]
-    let timeout: NodeJS.Timeout
+    let timeout: ReturnType<typeof setTimeout>
 
     if (!isDeleting && displayed.length < current.length) {
       timeout = setTimeout(() => {
