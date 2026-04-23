@@ -12,7 +12,7 @@ const projects = [
     link: '#',
     color: '#e8ff47',
     images: [
-      '/images/project1-1.jpg',
+      '/images/transbulevard.png',
       '/images/project1-2.jpg',
       '/images/project1-3.jpg',
     ],
