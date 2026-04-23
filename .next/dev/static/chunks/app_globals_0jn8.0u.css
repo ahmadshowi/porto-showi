@@ -867,6 +867,11 @@ img, video {
   --tw-gradient-to: transparent var(--tw-gradient-to-position);
 }
 
+.object-cover {
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
 .p-1 {
   padding: .25rem;
 }

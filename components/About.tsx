@@ -1,4 +1,5 @@
 'use client'
+import Image from "next/image"
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { RevealUp } from './RevealUp'
@@ -77,7 +78,12 @@ export default function About() {
                 transition={{ duration: 0.3 }}
               >
                 {/* Placeholder avatar */}
-                <div className="absolute inset-0 flex items-center justify-center">
+                <Image
+  src="Public/Images/showi.webp"
+  alt="Profile"
+  fill
+  className="object-cover"
+/>
                   <div className="text-center">
                     <div className="w-24 h-24 rounded-full bg-accent/20 border-2 border-accent/40 mx-auto mb-4 flex items-center justify-center">
                       <span className="font-display text-4xl font-bold text-accent">A</span>
