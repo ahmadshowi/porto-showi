@@ -20,10 +20,10 @@ export default function Footer() {
           <div className="text-center">
             <p className="font-mono text-xs text-text-dim">
               Designed & Built by{' '}
-              <span className="text-accent">Alex</span>
+              <span className="text-accent">Showi</span>
             </p>
             <p className="font-mono text-[0.65rem] text-border mt-1">
-              © {year} — All rights reserved
+              © {2026} — All rights reserved by Showi
             </p>
           </div>
 
