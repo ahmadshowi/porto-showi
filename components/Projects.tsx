@@ -8,13 +8,12 @@ const projects = [
     number: '01',
     title: 'Rental Mobil Transbulevard',
     desc: 'Membuat website untuk rental mobil menggunakan Next.js, Tailwind CSS, dan Firebase. Fitur termasuk pemesanan online, manajemen armada, dan',
-    tags: ['Next.js', 'Stripe', 'PostgreSQL'],
+    tags: ['PHP', 'JavaScript', 'MySQL'],
     link: '#',
     color: '#e8ff47',
     images: [
       '/images/mockup_rental.png',
-      '/images/project1-2.jpg',
-      '/images/project1-3.jpg',
+      '/images/transbulevard1.png',
     ],
   },
   {
@@ -25,8 +24,8 @@ const projects = [
     link: '#',
     color: '#3effee',
     images: [
-      '/images/project2-1.jpg',
-      '/images/project2-2.jpg',
+      '/images/techdoc_stream.png',
+      '/images/techdoc_stream2.png',
     ],
   },
 ]
