@@ -19,13 +19,25 @@ const projects = [
   {
     number: '02',
     title: 'Technical Documentation App Stream',
-    desc: 'Creating comprehensive technical documentation for a stream platform, built with React, Node.js, and MongoDB.',
-    tags: ['React', 'Node.js', 'MongoDB'],
+    desc: 'Creatingtechnical documentation for Operasional Division of AirNav Indonesia using PHP, Node.js, and MySQL. Features include document management, version control, and user access levels.',
+    tags: ['CI', 'Node.js', 'MySQL', 'PHP'],
     link: '#',
     color: '#3effee',
     images: [
       '/images/techdoc_stream.png',
-      '/images/techdoc_stream2.png',
+      '/images/techdoc_stream.png',
+    ],
+  },
+    {
+    number: '03',
+    title: 'Manajemen Bengkel HS Motor',
+    desc: 'Creating Website for HS Motor Workshop Management using PHP, JavaScript, and MySQL. Features include service scheduling, customer management, and financial reporting.',
+    tags: ['PHP', 'JavaScript', 'MySQL'],
+    link: '#',
+    color: '#3effee',
+    images: [
+      '/images/mockup_hsmotor.png',
+      '/images/mockup_hsmotor.png',
     ],
   },
 ]
