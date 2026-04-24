@@ -13,7 +13,6 @@ const projects = [
     color: '#e8ff47',
     images: [
       '/images/mockup_rental.png',
-      '/images/transbulevard1.png',
     ],
   },
   {
@@ -24,7 +23,6 @@ const projects = [
     link: '#',
     color: '#3effee',
     images: [
-      '/images/techdoc_stream.png',
       '/images/techdoc_stream.png',
     ],
   },
@@ -37,7 +35,17 @@ const projects = [
     color: '#3effee',
     images: [
       '/images/mockup_hsmotor.png',
-      '/images/mockup_hsmotor.png',
+    ],
+  },
+  {
+    number: '04',
+    title: 'SPK Dana Bansos Desa Sukamaju',
+    desc: 'Creating Website for Decision Support System for Social Assistance Fund Distribution in Sukamaju Village using PHP, JavaScript, and MySQL. Features include recipient data analysis, distribution visualization, and fund allocation recommendations.',
+    tags: ['PHP', 'JavaScript', 'MySQL'],
+    link: '#',
+    color: '#3effee',
+    images: [
+      '/images/mockup_spk.png',
     ],
   },
 ]
