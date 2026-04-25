@@ -5,7 +5,7 @@ import { RevealUp } from './RevealUp'
 
 const certifications = [
   {
-    name: 'Junior Web Programmer Certification',
+    name: 'Pemrograman',
     issuer: 'Badan Nasional Sertifikasi Profesi (BNSP)',
     date: '2024',
     id: 'BNSP-JWP-001',
@@ -13,8 +13,8 @@ const certifications = [
     color: '#1D4ED8',
   },
   {
-    name: 'Certified Internship Program',
-    issuer: 'Maganghub Kementerian Ketenagakerjaan RI',
+    name: 'MagangHub',
+    issuer: 'Kementerian Ketenagakerjaan RI',
     date: '2024',
     id: 'MAGANGHUB-002',
     logo: '/images/LogoMaganghub.png',
