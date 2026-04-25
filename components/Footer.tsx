@@ -13,7 +13,7 @@ export default function Footer() {
             className="font-display text-2xl font-bold text-accent"
             whileHover={{ scale: 1.05 }}
           >
-            DEV<span className="text-text">.</span>
+            Showi<span className="text-text">.</span>
           </motion.div>
 
           {/* Center */}

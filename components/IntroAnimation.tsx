@@ -82,7 +82,7 @@ export default function IntroAnimation({ onComplete }: Props) {
           animate={phase === 'exit' ? { scale: 20, opacity: 0 } : { scale: 1, opacity: 1 }}
           transition={{ duration: 0.8 }}
         >
-          PORTFOLIO
+          PORTOFOLIO
         </motion.span>
       </div>
     </motion.div>
