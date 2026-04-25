@@ -17,7 +17,7 @@ const certifications = [
     issuer: 'Kementerian Ketenagakerjaan RI',
     date: '2024',
     id: 'MAGANGHUB-002',
-    logo: '/images/LogoMaganghub.png',
+    logo: '/images/maganghub.png',
     color: '#16A34A',
   },
 ]
