@@ -1,27 +1,17 @@
 'use client'
-
 import './Folder.css'
 
 const darkenColor = (hex: string, percent: number) => {
   let color = hex.startsWith('#') ? hex.slice(1) : hex
-
-  if (color.length === 3) {
-    color = color.split('').map(c => c + c).join('')
-  }
-
+  if (color.length === 3) color = color.split('').map(c => c + c).join('')
   const num = parseInt(color, 16)
   let r = (num >> 16) & 0xff
   let g = (num >> 8) & 0xff
   let b = num & 0xff
-
   r = Math.floor(r * (1 - percent))
   g = Math.floor(g * (1 - percent))
   b = Math.floor(b * (1 - percent))
-
-  return `#${((1 << 24) + (r << 16) + (g << 8) + b)
-    .toString(16)
-    .slice(1)
-    .toUpperCase()}`
+  return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`
 }
 
 export default function Folder({
@@ -39,36 +29,26 @@ export default function Folder({
   isOpen?: boolean
   onClick?: () => void
 }) {
-  const maxItems = 3
-  const papers = [...items].slice(0, maxItems)
-
-  while (papers.length < maxItems) papers.push(null)
-
-  const folderBackColor = darkenColor(color, 0.08)
+  const papers = [...items].slice(0, 3)
+  while (papers.length < 3) papers.push(null)
 
   const folderStyle = {
     '--folder-color': color,
-    '--folder-back-color': folderBackColor
+    '--folder-back-color': darkenColor(color, 0.08)
   } as React.CSSProperties
 
   return (
     <div
       style={{
         transform: `scale(${size})`,
-        marginBottom: `${size * 55}px`
+        marginBottom: `${size * 45}px`
       }}
       className={className}
     >
-      <div
-        className={`folder ${isOpen ? 'open' : ''}`}
-        style={folderStyle}
-        onClick={onClick}
-      >
+      <div className={`folder ${isOpen ? 'open' : ''}`} style={folderStyle} onClick={onClick}>
         <div className="folder__back">
           {papers.map((item, i) => (
-            <div key={i} className={`paper paper-${i + 1}`}>
-              {item}
-            </div>
+            <div key={i} className={`paper paper-${i + 1}`}>{item}</div>
           ))}
           <div className="folder__front" />
           <div className="folder__front right" />
