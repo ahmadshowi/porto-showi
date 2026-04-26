@@ -38,7 +38,7 @@ export default function Navbar() {
           className="relative z-10 font-display font-bold text-xl text-accent"
           whileHover={{ scale: 1.05 }}
         >
-          DEV<span className="text-text">.</span>
+          Showi<span className="text-text">.</span>
         </motion.a>
 
         {/* Desktop nav */}

@@ -11,14 +11,14 @@ const folders = [
       {
         title: 'AirNav Indonesia',
         period: '2025 — 2026',
-        image: '/images/project1.webp',
-        desc: 'Bussines Analyst For Application Internal Company'
+        image: '/images/airnav.png',
+        desc: 'Business Analyst App NavEvent For Application Internal Company'
       },
       {
         title: 'AirNav Indonesia',
         period: '2025 — 2026',
-        image: '/images/project2.webp',
-        desc: 'System Analyst For Application Internal Company'
+        image: '/images/airnav.png',
+        desc: 'System Analyst App STREAM Application Internal Company'
       }
     ]
   },
@@ -28,25 +28,26 @@ const folders = [
       {
         title: 'Rental Mobil Transbulevard',
         period: '2025',
-        image: '/images/project3.webp',
+        image: '/images/bulevard.png',
         desc: 'Membuat website untuk rental mobil menggunakan Next.js, Tailwind CSS, dan Firebase. Fitur termasuk pemesanan online, manajemen armada, dan'
-      }
-    ]
-  },
-  {
-    title: 'Projects',
-    items: [
+      },
       {
         title: 'Sistem Manajemen Bengkel HS Motor',
         period: '2025',
-        image: '/images/project4.webp',
+        image: '/images/hsmotor.png',
         desc: 'Membuat aplikasi manajemen bengkel menggunakan React, Node.js, dan MongoDB. Fitur termasuk penjadwalan servis, manajemen pelanggan, dan laporan keuangan.'
       },
       {
         title: 'Sistem Penunjang Keputusan Dana Bansos',
         period: '2025',
-        image: '/images/project5.webp',
+        image: '/images/cianjur.png',
         desc: 'Memuat aplikasi penunjang keputusan untuk pendistribusian dana bansos menggunakan React, Express.js, dan PostgreSQL. Fitur termasuk analisis data penerima, visualisasi distribusi, dan rekomendasi alokasi dana.'
+      },      
+      {
+        title: 'UI/UX Design for App Kenapa Bandung?',
+        period: '2025',
+        image: '/images/bandung.png',
+        desc: 'Membuat desain UI/UX untuk aplikasi Kenapa Bandung? menggunakan Figma. Fitur termasuk desain antarmuka yang menarik, pengalaman pengguna yang intuitif, dan prototipe interaktif.'
       }
     ]
   }

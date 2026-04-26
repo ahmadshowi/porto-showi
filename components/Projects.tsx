@@ -26,8 +26,19 @@ const projects = [
       '/images/techdoc_stream.png',
     ],
   },
-    {
+  {
     number: '03',
+    title: 'Business Analyst App NavEvent',
+    desc: 'Creating documentation for Business Analyst App NavEvent for Internal Company Application of AirNav Indonesia using Laravel, React.js, and MySQL. Features include document management, user requirements analysis, and stakeholder communication.',
+    tags: ['React.js', 'Laravel', 'MySQL'],
+    link: '#',
+    color: '#3effee',
+    images: [
+      '/images/techdoc_stream.png',
+    ],
+  },
+    {
+    number: '04',
     title: 'Manajemen Bengkel HS Motor',
     desc: 'Creating Website for HS Motor Workshop Management using PHP, JavaScript, and MySQL. Features include service scheduling, customer management, and financial reporting.',
     tags: ['PHP', 'JavaScript', 'MySQL'],
@@ -38,7 +49,7 @@ const projects = [
     ],
   },
   {
-    number: '04',
+    number: '05',
     title: 'SPK Dana Bansos Desa Sukamaju',
     desc: 'Creating Website for Decision Support System for Social Assistance Fund Distribution in Sukamaju Village using PHP, JavaScript, and MySQL. Features include recipient data analysis, distribution visualization, and fund allocation recommendations.',
     tags: ['PHP', 'JavaScript', 'MySQL'],
@@ -46,6 +57,17 @@ const projects = [
     color: '#3effee',
     images: [
       '/images/mockup_spk.png',
+    ],
+  },
+  {
+    number: '06',
+    title: 'UI/UX Design for App Kenapa Bandung?',
+    desc: 'Creating UI/UX design for the Kenapa Bandung? app using Figma. Features include an attractive interface design, intuitive user experience, and interactive prototypes.',
+    tags: ['Figma'],
+    link: '#',
+    color: '#3effee',
+    images: [
+      '/images/kenapabandung.png',
     ],
   },
 ]
