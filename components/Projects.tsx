@@ -34,7 +34,7 @@ const projects = [
     link: '#',
     color: '#3effee',
     images: [
-      '/images/techdoc_stream.png',
+      '/images/navevent.png',
     ],
   },
     {

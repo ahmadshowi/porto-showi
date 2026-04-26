@@ -52,7 +52,13 @@ export default function Folder({
   } as React.CSSProperties
 
   return (
-    <div style={{ transform: `scale(${size})` }} className={className}>
+    <div
+      style={{
+        transform: `scale(${size})`,
+        marginBottom: `${size * 55}px`
+      }}
+      className={className}
+    >
       <div
         className={`folder ${isOpen ? 'open' : ''}`}
         style={folderStyle}
