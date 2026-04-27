@@ -156,7 +156,7 @@ export default function Hero() {
           </button>
 
           <a
-            href="/images/CV-AhmadShowi.pdf"
+            href="/images/CV-ahmadshowi.pdf"
             download
             className="px-8 py-4 border border-accent text-accent font-mono text-sm font-bold transition-all duration-300 hover:bg-accent hover:text-bg hover:scale-105 inline-flex items-center gap-2"
           >
