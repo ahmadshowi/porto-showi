@@ -1,9 +1,9 @@
 'use client'
-import Image from "next/image"
-import PixelTransition from '@/components/PixelTransition'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
+import { useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { RevealUp } from './RevealUp'
+import MaskedProfile from '@/components/MaskedProfile'
 
 export default function About() {
   const ref = useRef<HTMLElement>(null)
@@ -12,7 +12,12 @@ export default function About() {
 
   return (
     <section ref={ref} id="about" className="relative py-32 px-6 overflow-hidden">
-      {/* Parallax BG text */}
+      <motion.div
+        style={{ x }}
+        className="absolute top-20 left-0 text-[10rem] md:text-[14rem] font-bold opacity-[0.02] select-none pointer-events-none"
+      >
+        ABOUT
+      </motion.div>
 
       <div className="relative z-10 max-w-6xl mx-auto">
         <RevealUp>
@@ -20,12 +25,10 @@ export default function About() {
         </RevealUp>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Left: Text */}
           <div>
-            <RevealUp delay={0.1}>
+            <RevealUp>
               <h2 className="display-font text-5xl md:text-6xl font-bold text-text leading-tight mb-8">
-                Crafting code<br />with{' '}
-                <span className="text-accent">purpose</span>
+                Crafting code<br />with <span className="text-accent">purpose</span>
               </h2>
             </RevealUp>
 
@@ -37,8 +40,7 @@ export default function About() {
 
             <RevealUp delay={0.3}>
               <p className="font-mono text-sm text-text-dim leading-relaxed mb-8">
-                When I'm not coding, you'll find me exploring new design patterns, contributing
-                to open source, or hunting for the perfect cup of kopi.
+                Bridging logic, design, and development into meaningful systems that solve real operational problems.
               </p>
             </RevealUp>
 
@@ -46,11 +48,11 @@ export default function About() {
               <div className="grid grid-cols-2 gap-6">
                 {[
                   { label: 'Projects', value: '6+' },
-                  { label: 'Experience', value: '1 yrs' },
+                  { label: 'Experience', value: '1 YR' },
                   { label: 'Certifications', value: '2+' },
                   { label: 'Coffee/day', value: '∞' },
                 ].map(({ label, value }) => (
-                  <div key={label} className="border border-border p-4 hover:border-accent/50 transition-colors duration-300">
+                  <div key={label} className="border border-border p-4 hover:border-accent/50 transition-all duration-300">
                     <div className="font-display text-3xl font-bold text-accent">{value}</div>
                     <div className="font-mono text-xs text-text-dim uppercase tracking-widest mt-1">{label}</div>
                   </div>
@@ -59,63 +61,8 @@ export default function About() {
             </RevealUp>
           </div>
 
-          {/* Right: Photo placeholder + decorative */}
           <RevealUp delay={0.2} direction="right">
-            <div className="relative">
-              {/* Photo frame */}
-              <motion.div
-  className="relative aspect-[3/4] max-w-sm mx-auto bg-surface border border-border overflow-hidden"
-  whileHover={{ scale: 1.01 }}
-  transition={{ duration: 0.3 }}
->
-  <PixelTransition
-  firstContent={
-    <img
-      src="/images/showi.webp"
-      alt="Profile"
-      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-    />
-  }
-  secondContent={
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        display: "grid",
-        placeItems: "center",
-        backgroundColor: "#0a0a0a"
-      }}
-    >
-      <p
-        style={{
-          fontWeight: 700,
-          fontSize: "1.5rem",
-          color: "#e8ff47"
-        }}
-      >
-        Ahmad Showi S Fuadi 👨‍💻
-      </p>
-    </div>
-  }
-  gridSize={20}
-  pixelColor="#e8ff47"
-  animationStepDuration={0.5}
-  aspectRatio="133%" // ✅ fix tinggi (3/4 ratio)
-  className="w-full h-full"
-/>
-</motion.div>
-
-              {/* Floating badge */}
-
-              {/* Decorative dot grid */}
-              <div
-                className="absolute -top-6 -left-6 w-24 h-24 opacity-20"
-                style={{
-                  backgroundImage: 'radial-gradient(circle, #e8ff47 1px, transparent 1px)',
-                  backgroundSize: '8px 8px',
-                }}
-              />
-            </div>
+            <MaskedProfile />
           </RevealUp>
         </div>
       </div>
