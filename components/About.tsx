@@ -31,9 +31,7 @@ export default function About() {
 
             <RevealUp delay={0.2}>
               <p className="font-mono text-sm text-text-dim leading-relaxed mb-6">
-                I'm a full-stack developer passionate about building products that live at the
-                intersection of great design and solid engineering. With 3+ years of experience,
-                I specialize in React, Next.js, and Node.js ecosystems.
+                Experienced in Business Analysis, System Analysis, and Full-Stack Development—translating business requirements into clear system workflows and transforming them into scalable digital solutions.
               </p>
             </RevealUp>
 
@@ -47,9 +45,9 @@ export default function About() {
             <RevealUp delay={0.4}>
               <div className="grid grid-cols-2 gap-6">
                 {[
-                  { label: 'Projects', value: '20+' },
-                  { label: 'Experience', value: '3 yrs' },
-                  { label: 'Certifications', value: '8+' },
+                  { label: 'Projects', value: '6+' },
+                  { label: 'Experience', value: '1 yrs' },
+                  { label: 'Certifications', value: '2+' },
                   { label: 'Coffee/day', value: '∞' },
                 ].map(({ label, value }) => (
                   <div key={label} className="border border-border p-4 hover:border-accent/50 transition-colors duration-300">
@@ -95,7 +93,7 @@ export default function About() {
           color: "#e8ff47"
         }}
       >
-        Showi 👨‍💻
+        Ahmad Showi S Fuadi 👨‍💻
       </p>
     </div>
   }

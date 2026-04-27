@@ -29,7 +29,7 @@ const skillGroups = [
     icon: '⬡',
     skills: [
       { name: 'Git / GitHub', level: 92 },
-      { name: 'Figma', level: 78 },
+      { name: 'Figma', level: 90 },
       { name: 'AWS (EC2, S3)', level: 65 },
       { name: 'CI/CD Pipelines', level: 72 },
     ],
