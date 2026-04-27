@@ -1,5 +1,6 @@
 'use client'
-import { motion, AnimatePresence } from 'framer-motion'
+
+import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 
 interface Props {
@@ -7,84 +8,120 @@ interface Props {
 }
 
 export default function IntroAnimation({ onComplete }: Props) {
-  const [phase, setPhase] = useState<'loading' | 'reveal' | 'exit'>('loading')
-  const [counter, setCounter] = useState(0)
+  const [progress, setProgress] = useState(0)
+  const [phase, setPhase] = useState<'boot' | 'zoom' | 'fade'>('boot')
 
   useEffect(() => {
-    // Count up to 100
     const interval = setInterval(() => {
-      setCounter(prev => {
+      setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval)
-          setTimeout(() => setPhase('reveal'), 300)
-          setTimeout(() => setPhase('exit'), 1000)
-          setTimeout(() => onComplete(), 1800)
+          setTimeout(() => setPhase('zoom'), 400)
+          setTimeout(() => setPhase('fade'), 1800)
+          setTimeout(() => onComplete(), 2600)
           return 100
         }
-        return prev + 2
+        return prev + 1
       })
-    }, 25)
+    }, 22)
+
     return () => clearInterval(interval)
   }, [onComplete])
 
+  const tunnelLines = Array.from({ length: 14 })
+
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-bg overflow-hidden"
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
+      className="fixed inset-0 z-[999] overflow-hidden bg-black"
+      animate={phase === 'fade' ? { opacity: 0 } : { opacity: 1 }}
+      transition={{ duration: 0.8, ease: 'easeInOut' }}
     >
-      {/* Top panel */}
-      <motion.div
-        className="absolute inset-x-0 top-0 bg-accent z-10"
-        initial={{ height: '50%' }}
-        animate={phase === 'exit' ? { height: 0 } : { height: '50%' }}
-        transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-      />
-      {/* Bottom panel */}
-      <motion.div
-        className="absolute inset-x-0 bottom-0 bg-accent z-10"
-        initial={{ height: '50%' }}
-        animate={phase === 'exit' ? { height: 0 } : { height: '50%' }}
-        transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-      />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.08),transparent_60%)]" />
 
-      {/* Center content */}
-      <div className="relative z-20 flex flex-col items-center gap-6">
-        {/* Counter */}
+      <div className="absolute inset-0 flex items-center justify-center perspective-[2000px]">
         <motion.div
-          className="font-mono text-7xl font-bold text-bg"
-          animate={phase === 'exit' ? { opacity: 0, scale: 0.8 } : { opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3 }}
+          className="relative w-full h-full flex items-center justify-center"
+          animate={
+            phase === 'zoom'
+              ? { scale: 4.8, opacity: 0.15 }
+              : { scale: 1, opacity: 1 }
+          }
+          transition={{ duration: 1.8, ease: [0.76, 0, 0.24, 1] }}
         >
-          {String(counter).padStart(3, '0')}
-        </motion.div>
+          {tunnelLines.map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute border border-cyan-400/20 rounded-[40px]"
+              style={{
+                width: `${220 + i * 140}px`,
+                height: `${120 + i * 80}px`,
+              }}
+              animate={{
+                scale: [1, 1.08, 1],
+                opacity: [0.15, 0.4, 0.15],
+              }}
+              transition={{
+                duration: 2.5,
+                repeat: Infinity,
+                delay: i * 0.08,
+                ease: 'easeInOut',
+              }}
+            />
+          ))}
 
-        {/* Progress bar */}
-        <div className="w-48 h-0.5 bg-bg/30 overflow-hidden">
           <motion.div
-            className="h-full bg-bg"
-            style={{ width: `${counter}%` }}
+            className="absolute w-[180px] h-[180px] rounded-full bg-cyan-400/10 blur-3xl"
+            animate={{
+              scale: [1, 1.4, 1],
+              opacity: [0.3, 0.8, 0.3],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+        </motion.div>
+      </div>
+
+      <div className="absolute top-10 left-10 font-mono text-[11px] tracking-[0.3em] text-cyan-300/60 uppercase space-y-2">
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
+          ENTERING SHOWI DIGITAL SYSTEM
+        </motion.p>
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
+          INITIALIZING SECURE ARCHIVE
+        </motion.p>
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}>
+          ACCESS GRANTED [{String(progress).padStart(3, '0')}]
+        </motion.p>
+      </div>
+
+      <div className="absolute bottom-14 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4">
+        <motion.h1
+          className="text-cyan-100 text-5xl md:text-7xl font-semibold tracking-[0.4em]"
+          animate={phase === 'zoom' ? { opacity: 0.3, scale: 1.3 } : { opacity: 1, scale: 1 }}
+          transition={{ duration: 1.4 }}
+        >
+          SHOWI
+        </motion.h1>
+
+        <div className="w-56 h-[1px] bg-cyan-400/20 overflow-hidden">
+          <motion.div
+            className="h-full bg-cyan-300"
+            style={{ width: `${progress}%` }}
           />
         </div>
 
         <motion.p
-          className="font-mono text-xs tracking-[0.3em] text-bg/60 uppercase"
-          animate={phase === 'exit' ? { opacity: 0 } : { opacity: 1 }}
+          className="font-mono text-[10px] tracking-[0.35em] text-cyan-300/50 uppercase"
+          animate={{ opacity: [0.3, 1, 0.3] }}
+          transition={{ duration: 1.8, repeat: Infinity }}
         >
-          Loading Portfolio
+          DIGITAL TUNNEL PORTAL ACTIVE
         </motion.p>
       </div>
 
-      {/* Background text */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
-        <motion.span
-          className="font-display text-[20vw] font-bold text-accent/10 select-none whitespace-nowrap"
-          animate={phase === 'exit' ? { scale: 20, opacity: 0 } : { scale: 1, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          PORTOFOLIO
-        </motion.span>
-      </div>
+      <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(to_bottom,transparent,rgba(0,0,0,0.4),transparent)] opacity-40" />
     </motion.div>
   )
 }
