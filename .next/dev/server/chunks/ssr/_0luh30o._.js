@@ -12,7 +12,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 ;
 ;
 const metadata = {
-    title: 'Portfolio — Developer & Designer',
+    title: 'Portoofolio — Ahmad Showi s Fuadi',
     description: 'Full-stack developer portfolio with creative work and projects.'
 };
 function RootLayout({ children }) {
