@@ -5,38 +5,48 @@ import { useInView } from 'react-intersection-observer'
 
 const skillGroups = [
   {
-    category: 'Frontend',
+    category: 'Business Analysis',
     icon: '⬡',
     skills: [
-      { name: 'React / Next.js', level: 92 },
-      { name: 'TypeScript', level: 85 },
-      { name: 'TailwindCSS', level: 90 },
-      { name: 'Framer Motion', level: 80 },
+      { name: 'Requirements Gathering', level: 90 },
+      { name: 'Business Process Modeling', level: 85 },
+      { name: 'Stakeholder Management', level: 88 },
+      { name: 'User Stories & Use Cases', level: 90 },
     ],
   },
   {
-    category: 'Backend',
+    category: 'System Analysis',
     icon: '⬡',
     skills: [
-      { name: 'Node.js / Express', level: 82 },
-      { name: 'PostgreSQL', level: 75 },
-      { name: 'REST API Design', level: 88 },
-      { name: 'Docker', level: 68 },
+      { name: 'System Design & Documentation', level: 85 },
+      { name: 'UML / Flowcharting (draw.io)', level: 88 },
+      { name: 'Data Analysis', level: 78 },
+      { name: 'SQL', level: 80 },
     ],
   },
   {
-    category: 'Tools & Design',
+    category: 'Tools & Collaboration',
     icon: '⬡',
     skills: [
-      { name: 'Git / GitHub', level: 92 },
-      { name: 'Figma', level: 90 },
-      { name: 'AWS (EC2, S3)', level: 65 },
-      { name: 'CI/CD Pipelines', level: 72 },
+      { name: 'Jira', level: 85 },
+      { name: 'Figma', level: 88 },
+      { name: 'draw.io', level: 88 },
+      { name: 'Git / GitHub', level: 80 },
+    ],
+  },
+  {
+    category: 'Development',
+    icon: '⬡',
+    skills: [
+      { name: 'React / Next.js', level: 75 },
+      { name: 'PHP', level: 78 },
+      { name: 'REST API Design', level: 75 },
+      { name: 'TailwindCSS', level: 70 },
     ],
   },
 ]
 
-const techStack = ['React', 'Next.js', 'TypeScript', 'Node.js', 'Express', 'PostgreSQL', 'MongoDB', 'Redis', 'TailwindCSS', 'Framer Motion', 'Docker', 'AWS', 'Git', 'Figma', 'Prisma', 'GraphQL']
+const techStack = ['React', 'PHP', 'Figma', 'draw.io', 'Jira', 'Next.js', 'TypeScript', 'Node.js', 'PostgreSQL', 'MySQL', 'MongoDB', 'TailwindCSS', 'Git', 'Confluence', 'Notion', 'Postman']
 
 function SkillBar({ name, level, index }: { name: string; level: number; index: number }) {
   const { ref, inView } = useInView({ threshold: 0.5, triggerOnce: true })
@@ -69,11 +79,11 @@ export default function Skills() {
         </RevealUp>
         <RevealUp delay={0.1}>
           <h2 className="display-font text-5xl md:text-6xl font-bold text-text mb-16">
-            Tech <span className="text-accent">Stack</span>
+            Business &amp; <span className="text-accent">System Analysis</span>
           </h2>
         </RevealUp>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
           {skillGroups.map((group, gi) => (
             <RevealUp key={group.category} delay={gi * 0.1}>
               <motion.div

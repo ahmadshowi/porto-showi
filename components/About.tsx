@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { RevealUp } from './RevealUp'
-import MaskedProfile from '@/components/MaskedProfile'
+import Avatar3D from '@/components/Avatar3D'
 
 export default function About() {
   const ref = useRef<HTMLElement>(null)
@@ -62,7 +62,12 @@ export default function About() {
           </div>
 
           <RevealUp delay={0.2} direction="right">
-            <MaskedProfile />
+            <div className="relative h-[500px]">
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="w-[380px] h-[380px] rounded-full bg-accent/20 blur-[120px]" />
+              </div>
+              <Avatar3D />
+            </div>
           </RevealUp>
         </div>
       </div>
