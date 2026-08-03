@@ -28,10 +28,12 @@ function Model() {
     const s = 1.5 * entrance.current
     group.current.scale.set(s, s, s)
 
-    // Mouse-follow rotation (only kicks in meaningfully once entrance has settled)
+    // Mouse-follow rotation — target is just the mouse offset, so the model
+    // settles facing forward (this also gives the entrance a "spin toward
+    // camera" feel since it starts at the initial rotation prop below)
     group.current.rotation.y = THREE.MathUtils.lerp(
       group.current.rotation.y,
-      Math.PI + mouse.x * 0.35,
+      mouse.x * 0.35,
       0.08
     )
 
@@ -62,8 +64,9 @@ function Model() {
         floatingRange={[-0.2, 0.2]}
       >
         <Center>
-          {/* rotation is driven by the ref in useFrame, not this static prop */}
-          <primitive ref={group} object={scene} scale={0} />
+          {/* initial rotation is the starting point for the entrance spin;
+              useFrame takes over and lerps it toward mouse.x afterward */}
+          <primitive ref={group} object={scene} scale={0} rotation={[0, Math.PI, 0]} />
         </Center>
       </Float>
     </>
