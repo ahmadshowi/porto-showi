@@ -71,7 +71,7 @@ export default function IntroAnimation({ onComplete }: Props) {
           className="font-mono text-xs tracking-[0.3em] text-bg/60 uppercase"
           animate={phase === 'exit' ? { opacity: 0 } : { opacity: 1 }}
         >
-          Loading Portfolio
+          Loading Portofolio
         </motion.p>
       </div>
 

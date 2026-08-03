@@ -9,6 +9,9 @@ export default function About() {
   const ref = useRef<HTMLElement>(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
   const x = useTransform(scrollYProgress, [0, 1], ['-5%', '5%'])
+  // Subtle scroll-linked parallax + rotation for the 3D avatar container
+  const avatarY = useTransform(scrollYProgress, [0, 1], ['-4%', '4%'])
+  const avatarRotate = useTransform(scrollYProgress, [0, 1], [-3, 3])
 
   return (
     <section ref={ref} id="about" className="relative py-32 px-6 overflow-hidden">
@@ -51,23 +54,54 @@ export default function About() {
                   { label: 'Experience', value: '1 YR' },
                   { label: 'Certifications', value: '2+' },
                   { label: 'Coffee/day', value: '∞' },
-                ].map(({ label, value }) => (
-                  <div key={label} className="border border-border p-4 hover:border-accent/50 transition-all duration-300">
+                ].map(({ label, value }, i) => (
+                  <motion.div
+                    key={label}
+                    className="border border-border p-4 hover:border-accent/50 transition-all duration-300"
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.1 * i, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  >
                     <div className="font-display text-3xl font-bold text-accent">{value}</div>
                     <div className="font-mono text-xs text-text-dim uppercase tracking-widest mt-1">{label}</div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </RevealUp>
           </div>
 
           <RevealUp delay={0.2} direction="right">
-            <div className="relative h-[500px]">
+            <motion.div
+              className="relative h-[500px]"
+              style={{ y: avatarY, rotate: avatarRotate }}
+            >
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-[380px] h-[380px] rounded-full bg-accent/20 blur-[120px]" />
+                <motion.div
+                  className="w-[380px] h-[380px] rounded-full bg-accent/20 blur-[120px]"
+                  animate={{
+                    scale: [1, 1.15, 1],
+                    opacity: [0.7, 1, 0.7],
+                    x: [0, 15, 0],
+                    y: [0, -10, 0],
+                  }}
+                  transition={{
+                    duration: 6,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                />
               </div>
-              <Avatar3D />
-            </div>
+              <motion.div
+                className="relative h-full"
+                initial={{ opacity: 0, scale: 0.85 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+              >
+                <Avatar3D />
+              </motion.div>
+            </motion.div>
           </RevealUp>
         </div>
       </div>
