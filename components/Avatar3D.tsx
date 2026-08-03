@@ -8,6 +8,7 @@ import {
   Environment,
   Float,
   Html,
+  OrbitControls,
   useGLTF,
 } from '@react-three/drei'
 import * as THREE from 'three'
@@ -17,31 +18,16 @@ function Model() {
   const rimLight = useRef<THREE.DirectionalLight>(null!)
   const { scene } = useGLTF('/models/showi.glb')
 
-  // Track entrance progress separately from mouse-follow rotation
+  // Track entrance progress on mount (scale 0 -> 1)
   const entrance = useRef(0)
 
-  useFrame(({ mouse, clock }) => {
+  useFrame(({ clock }) => {
     if (!group.current) return
 
     // Entrance: scale + fade in from 0 on mount
     entrance.current = THREE.MathUtils.lerp(entrance.current, 1, 0.045)
     const s = 1.5 * entrance.current
     group.current.scale.set(s, s, s)
-
-    // Mouse-follow rotation — target is just the mouse offset, so the model
-    // settles facing forward (this also gives the entrance a "spin toward
-    // camera" feel since it starts at the initial rotation prop below)
-    group.current.rotation.y = THREE.MathUtils.lerp(
-      group.current.rotation.y,
-      mouse.x * 0.35,
-      0.08
-    )
-
-    group.current.rotation.x = THREE.MathUtils.lerp(
-      group.current.rotation.x,
-      -mouse.y * 0.12,
-      0.08
-    )
 
     // Subtle breathing rim light — intensity drifts slowly, never fully static
     if (rimLight.current) {
@@ -59,13 +45,13 @@ function Model() {
       />
       <Float
         speed={2}
-        rotationIntensity={0.2}
-        floatIntensity={0.8}
-        floatingRange={[-0.2, 0.2]}
+        rotationIntensity={0.15}
+        floatIntensity={0.6}
+        floatingRange={[-0.15, 0.15]}
       >
         <Center>
-          {/* initial rotation is the starting point for the entrance spin;
-              useFrame takes over and lerps it toward mouse.x afterward */}
+          {/* rotation.y here is the resting/starting orientation — the user
+              can then grab and drag to rotate further via OrbitControls */}
           <primitive ref={group} object={scene} scale={0} rotation={[0, Math.PI, 0]} />
         </Center>
       </Float>
@@ -103,10 +89,18 @@ export default function Avatar3D() {
           scale={8}
         />
 
-        {/* OrbitControls removed from production render — it fights with the
-            manual mouse-follow rotation in Model(). Re-enable only for debugging,
-            and if you do, remove the rotation.y/rotation.x lerp above so they
-            don't fight each other. */}
+        {/* Drag to rotate. Zoom/pan stay off so the model can't be pushed
+            out of frame or scaled weirdly by scroll/two-finger gestures. */}
+        <OrbitControls
+          enablePan={false}
+          enableZoom={false}
+          enableRotate={true}
+          enableDamping
+          dampingFactor={0.08}
+          rotateSpeed={0.6}
+          autoRotate
+          autoRotateSpeed={0.6}
+        />
       </Suspense>
     </Canvas>
   )
