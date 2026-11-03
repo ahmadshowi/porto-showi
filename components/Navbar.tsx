@@ -1,6 +1,7 @@
 'use client'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { useState } from 'react'
+import { scrollToTarget, useScrollLock } from './SmoothScroll'
 
 const navItems = [
   { label: 'About', href: '#about' },
@@ -15,18 +16,17 @@ export default function Navbar() {
   const { scrollY } = useScroll()
   const bgOpacity = useTransform(scrollY, [0, 100], [0, 1])
   const [menuOpen, setMenuOpen] = useState(false)
+  useScrollLock(menuOpen)
 
   const handleNav = (href: string) => {
     setMenuOpen(false)
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
+    // wait a tick so the scroll lock is released before scrolling
+    requestAnimationFrame(() => scrollToTarget(href))
   }
 
   return (
     <>
-      <motion.nav
-        className="fixed top-0 left-0 right-0 z-40 px-6 py-4 flex items-center justify-between"
-        style={{}}
-      >
+      <motion.nav className="fixed top-0 left-0 right-0 z-40 px-6 py-4 flex items-center justify-between">
         <motion.div
           className="absolute inset-0 border-b border-border backdrop-blur-md"
           style={{ opacity: bgOpacity }}
@@ -35,6 +35,11 @@ export default function Navbar() {
         {/* Logo */}
         <motion.a
           href="#"
+          onClick={(e) => {
+            e.preventDefault()
+            setMenuOpen(false)
+            requestAnimationFrame(() => scrollToTarget(0))
+          }}
           className="relative z-10 font-display font-bold text-xl text-accent"
           whileHover={{ scale: 1.05 }}
         >
@@ -64,6 +69,8 @@ export default function Navbar() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
           className="relative z-10 md:hidden flex flex-col gap-1.5 p-1"
         >
           <motion.span
@@ -86,7 +93,10 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       <motion.div
-        className="fixed inset-0 z-30 bg-bg/95 backdrop-blur-md flex flex-col items-center justify-center gap-8 md:hidden"
+        className={`fixed inset-0 z-30 bg-bg/95 backdrop-blur-md flex flex-col items-center justify-center gap-8 md:hidden ${
+          menuOpen ? '' : 'pointer-events-none'
+        }`}
+        aria-hidden={!menuOpen}
         initial={{ opacity: 0, clipPath: 'circle(0% at calc(100% - 40px) 28px)' }}
         animate={menuOpen
           ? { opacity: 1, clipPath: 'circle(150% at calc(100% - 40px) 28px)' }
@@ -98,6 +108,7 @@ export default function Navbar() {
           <motion.button
             key={item.label}
             onClick={() => handleNav(item.href)}
+            tabIndex={menuOpen ? 0 : -1}
             className="font-display text-4xl font-bold text-text hover:text-accent transition-colors"
             initial={{ opacity: 0, y: 20 }}
             animate={menuOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}

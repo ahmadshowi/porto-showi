@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useState } from 'react'
+import { AnimatePresence, MotionConfig } from 'framer-motion'
 import IntroAnimation from '@/components/IntroAnimation'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
@@ -13,38 +14,41 @@ import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 import CursorGlow from '@/components/CursorGlow'
 import SmoothScroll from '@/components/SmoothScroll'
-import { useState } from 'react'
-import { AnimatePresence } from 'framer-motion'
 
 export default function Home() {
   const [introComplete, setIntroComplete] = useState(false)
+  // true as soon as the intro panels start opening (or right away when it's skipped)
+  const [revealed, setRevealed] = useState(false)
 
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <div className="noise" />
       <CursorGlow />
       <AnimatePresence>
         {!introComplete && (
-          <IntroAnimation onComplete={() => setIntroComplete(true)} />
+          <IntroAnimation
+            onReveal={() => setRevealed(true)}
+            onComplete={() => setIntroComplete(true)}
+          />
         )}
       </AnimatePresence>
-      {introComplete && (
-        <SmoothScroll>
-          <div className="relative bg-bg min-h-screen grid-bg">
-            <Navbar />
-            <main>
-              <Hero />
-              <About />
-              <Experience />
-              <Skills />
-              <Projects />
-              <Certifications />
-              <Contact />
-            </main>
-            <Footer />
-          </div>
-        </SmoothScroll>
-      )}
-    </>
+      {/* Content is always rendered (so it's in the HTML for crawlers);
+          the intro just sits on top of it until it finishes. */}
+      <SmoothScroll>
+        <div className="relative bg-bg min-h-screen grid-bg">
+          <Navbar />
+          <main>
+            <Hero revealed={revealed} />
+            <About />
+            <Experience />
+            <Skills />
+            <Projects />
+            <Certifications />
+            <Contact />
+          </main>
+          <Footer />
+        </div>
+      </SmoothScroll>
+    </MotionConfig>
   )
 }

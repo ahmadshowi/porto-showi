@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 type Logo = {
   node: React.ReactNode
@@ -24,46 +24,46 @@ export default function LogoLoop({
   pauseOnHover = true,
 }: Props) {
   const trackRef = useRef<HTMLDivElement>(null)
-  const [isPaused, setIsPaused] = useState(false)
+  // Refs (not state) so hovering doesn't restart the effect and snap x back to 0
+  const pausedRef = useRef(false)
+  const xRef = useRef(0)
 
   useEffect(() => {
-    if (!trackRef.current) return
-
     let animationFrame: number
-    let x = 0
+    let last = performance.now()
 
-    const width = trackRef.current.scrollWidth / 2
+    const animate = (now: number) => {
+      const track = trackRef.current
+      if (!track) return
 
-    const animate = () => {
-      if (!trackRef.current) return
+      // seconds since last frame, so speed is the same on 60Hz and 120Hz screens
+      const dt = Math.min((now - last) / 1000, 0.1)
+      last = now
 
-      if (!isPaused) {
-        const move = speed * 0.01
-        x += direction === 'left' ? -move : move
+      // One copy of the list plus the gap that sits between the two copies
+      const width = (track.scrollWidth + gap) / 2
 
-        if (direction === 'left' && x <= -width) {
-          x = 0
-        }
-
-        if (direction === 'right' && x >= 0) {
-          x = -width
-        }
-
-        trackRef.current.style.transform = `translateX(${x}px)`
+      if (!pausedRef.current && width > 0) {
+        const move = speed * dt
+        let x = xRef.current + (direction === 'left' ? -move : move)
+        if (x <= -width) x += width
+        if (x > 0) x -= width
+        xRef.current = x
+        track.style.transform = `translateX(${x}px)`
       }
 
       animationFrame = requestAnimationFrame(animate)
     }
 
-    animate()
+    animationFrame = requestAnimationFrame(animate)
     return () => cancelAnimationFrame(animationFrame)
-  }, [speed, direction, isPaused])
+  }, [speed, gap, direction])
 
   return (
     <div
       className="overflow-hidden w-full"
-      onMouseEnter={() => pauseOnHover && setIsPaused(true)}
-      onMouseLeave={() => pauseOnHover && setIsPaused(false)}
+      onMouseEnter={() => { if (pauseOnHover) pausedRef.current = true }}
+      onMouseLeave={() => { pausedRef.current = false }}
     >
       <div
         ref={trackRef}
@@ -78,6 +78,7 @@ export default function LogoLoop({
                 target="_blank"
                 rel="noopener noreferrer"
                 title={logo.title}
+                aria-label={logo.title}
                 className="opacity-70 hover:opacity-100 hover:scale-110 transition"
               >
                 {logo.node}

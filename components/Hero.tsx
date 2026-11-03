@@ -4,6 +4,9 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef, useEffect, useState } from 'react'
 import LogoLoop from '@/components/LogoLoop'
 import { Download } from 'lucide-react'
+import { scrollToTarget } from './SmoothScroll'
+import MaskReveal from './MaskReveal'
+import ProcessLoop from './ProcessLoop'
 
 import {
   SiReact,
@@ -18,6 +21,7 @@ import {
   SiPostgresql,
   SiMongodb,
   SiFirebase,
+  SiDjango,
   SiNodedotjs,
   SiExpress,
   SiOpenjdk,
@@ -30,10 +34,9 @@ import {
 } from 'react-icons/si'
 
 const roles = [
-  'Business Analyst',
   'System Analyst',
+  'Business Analyst',
   'Full Stack Developer',
-  'Solution Builder'
 ]
 
 const techLogos = [
@@ -47,6 +50,7 @@ const techLogos = [
   { node: <SiExpress />, title: 'Express.js', href: 'https://expressjs.com' },
   { node: <SiPhp />, title: 'PHP', href: 'https://www.php.net' },
   { node: <SiLaravel />, title: 'Laravel', href: 'https://laravel.com' },
+  { node: <SiDjango />, title: 'Django', href: 'https://www.djangoproject.com' },
   { node: <SiOpenjdk />, title: 'Java', href: 'https://www.java.com' },
   { node: <SiPython />, title: 'Python', href: 'https://www.python.org' },
   { node: <SiMysql />, title: 'MySQL', href: 'https://www.mysql.com' },
@@ -60,7 +64,7 @@ const techLogos = [
   { node: <SiVercel />, title: 'Vercel', href: 'https://vercel.com' },
 ]
 
-export default function Hero() {
+export default function Hero({ revealed }: { revealed: boolean }) {
   const ref = useRef<HTMLElement>(null)
 
   const { scrollYProgress } = useScroll({
@@ -101,7 +105,7 @@ export default function Hero() {
     <section
       ref={ref}
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-16"
+      className="relative min-h-screen flex flex-col overflow-hidden pt-16"
     >
       {/* Background Accent Glow */}
       <div className="absolute inset-0 pointer-events-none">
@@ -117,54 +121,70 @@ export default function Hero() {
         />
       </div>
 
-      {/* Hero Content */}
-      <motion.div
-        className="relative z-10 max-w-5xl mx-auto px-6 text-center"
-        style={{ opacity }}
-      >
-        <p className="section-label mb-6">Available for Work</p>
+      <div className="relative flex-1 flex items-center justify-center">
+        <ProcessLoop play={revealed} opacity={opacity} />
 
-        <h1 className="display-font text-6xl md:text-8xl lg:text-[10rem] font-bold leading-none text-text mb-4">
-          Hi, I&apos;m{' '}
-          <span className="text-accent glitch" data-text="Showi">
-            Showi
-          </span>
-        </h1>
+        {/* Hero Content */}
+        <motion.div
+          className="relative z-10 max-w-5xl mx-auto px-6 py-10 text-center"
+          style={{ opacity }}
+        >
+          <MaskReveal
+            as="h1"
+            play={revealed}
+            delay={0.15}
+            className="display-font text-6xl md:text-8xl lg:text-[10rem] font-bold leading-none text-text mb-4"
+            lines={[
+              'Hi, I’m',
+              <span key="name" className="text-accent glitch" data-text="Showi">Showi</span>,
+            ]}
+          />
 
-        <div className="font-mono text-xl text-text-dim mb-8 h-8">
-          <span className="text-accent">{'>'}</span>
-          <span className="ml-2">{displayed}</span>
-          <span className="cursor-blink text-accent">|</span>
-        </div>
-
-        <p className="font-mono text-sm md:text-base text-text-dim max-w-3xl mx-auto mb-12 leading-relaxed">
-          Experienced in Business Analysis, System Analysis, and Full-Stack Development—
-          translating business requirements into clear system workflows and transforming
-          them into scalable digital solutions.
-        </p>
-
-        <div className="flex justify-center flex-wrap gap-4 mb-14">
-          <button
-            onClick={() =>
-              document
-                .querySelector('#projects')
-                ?.scrollIntoView({ behavior: 'smooth' })
-            }
-            className="px-8 py-4 bg-accent text-bg font-mono text-sm font-bold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(232,255,71,0.35)]"
+          <motion.div
+            className="font-mono text-xl text-text-dim mb-8 h-8"
+            initial={{ opacity: 0, y: 16 }}
+            animate={revealed ? { opacity: 1, y: 0 } : undefined}
+            transition={{ duration: 0.6, delay: 0.55 }}
           >
-            View Projects
-          </button>
+            <span className="text-accent">{'>'}</span>
+            <span className="ml-2">{displayed}</span>
+            <span className="cursor-blink text-accent">|</span>
+          </motion.div>
 
-          <a
-            href="/images/CV-ahmadshowi.pdf"
-            download
-            className="px-8 py-4 border border-accent text-accent font-mono text-sm font-bold transition-all duration-300 hover:bg-accent hover:text-bg hover:scale-105 inline-flex items-center gap-2"
+          <motion.p
+            className="font-mono text-sm md:text-base text-text-dim max-w-3xl mx-auto mb-12 leading-relaxed"
+            initial={{ opacity: 0, y: 16 }}
+            animate={revealed ? { opacity: 1, y: 0 } : undefined}
+            transition={{ duration: 0.6, delay: 0.65 }}
           >
-            <Download size={16} />
-            Download Resume
-          </a>
-        </div>
-      </motion.div>
+            I turn business requirements into system specs, process flows, and
+            working software.
+          </motion.p>
+
+          <motion.div
+            className="flex justify-center flex-wrap gap-4"
+            initial={{ opacity: 0, y: 16 }}
+            animate={revealed ? { opacity: 1, y: 0 } : undefined}
+            transition={{ duration: 0.6, delay: 0.75 }}
+          >
+            <button
+              onClick={() => scrollToTarget('#projects')}
+              className="px-8 py-4 bg-accent text-bg font-mono text-sm font-bold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_25px_rgba(232,255,71,0.35)]"
+            >
+              View Projects
+            </button>
+
+            <a
+              href="/images/CV-ahmadshowi.pdf"
+              download
+              className="px-8 py-4 border border-accent text-accent font-mono text-sm font-bold transition-all duration-300 hover:bg-accent hover:text-bg hover:scale-105 inline-flex items-center gap-2"
+            >
+              <Download size={16} />
+              Download Resume
+            </a>
+          </motion.div>
+        </motion.div>
+      </div>
 
       {/* Tech Stack Loop */}
       <div className="relative z-10 w-full border-t border-border/50 py-8 px-6 bg-surface/40 backdrop-blur-md overflow-hidden">
@@ -172,7 +192,7 @@ export default function Hero() {
           TECH STACK
         </p>
 
-        <LogoLoop logos={techLogos} speed={60} gap={50} />
+        <LogoLoop logos={techLogos} speed={36} gap={50} />
       </div>
     </section>
   )

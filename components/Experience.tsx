@@ -1,22 +1,46 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Folder from '@/components/Folder'
 import { RevealUp } from './RevealUp'
+import MaskReveal from './MaskReveal'
 
-const folders = [
+type Item = {
+  title: string
+  role?: string
+  project?: string
+  period: string
+  image?: string
+  mark?: string // monogram shown when there's no image
+  desc: string
+}
+
+const folders: { title: string; unit: string; items: Item[] }[] = [
   {
     title: 'Company',
+    unit: 'Roles',
     items: [
       {
+        title: 'PT Pusaka Nagara',
+        role: 'System Analyst',
+        project: 'IBOZ ERP',
+        period: '2026 — Present',
+        mark: 'PN',
+        desc: 'System Analyst for IBOZ, the company\'s ERP system. Analyzing business processes, writing system specifications, and working between stakeholders and the Django development team to make sure what gets built matches what the business needs.'
+      },
+      {
         title: 'AirNav Indonesia',
+        role: 'Business Analyst',
+        project: 'NavEvent',
         period: '2025 — 2026',
         image: '/images/airnav.png',
         desc: 'Business Analyst for NavEvent, internal enterprise event reporting application focused on workflow analysis and requirement gathering.'
       },
       {
         title: 'AirNav Indonesia',
+        role: 'System Analyst',
+        project: 'STREAM',
         period: '2025 — 2026',
         image: '/images/airnav.png',
         desc: 'System Analyst for STREAM, translating business needs into system specs, process flow, and feature validation.'
@@ -25,7 +49,26 @@ const folders = [
   },
   {
     title: 'Freelance',
+    unit: 'Projects',
     items: [
+      {
+        title: 'Wedding Invitation Website',
+        period: '2026',
+        mark: 'WI',
+        desc: 'Digital wedding invitation website for sharing the couple\'s details and event information with guests.'
+      },
+      {
+        title: 'UI/UX Design Jentre NET',
+        period: '2026',
+        mark: 'JN',
+        desc: 'UI/UX design for Jentre NET, from user flow to high-fidelity screens.'
+      },
+      {
+        title: 'Cetak Barcode PT KMI',
+        period: '2026',
+        mark: 'KMI',
+        desc: 'Barcode printing application for PT KMI.'
+      },
       {
         title: 'Rental Mobil Transbulevard',
         period: '2025',
@@ -35,7 +78,7 @@ const folders = [
       {
         title: 'Sistem Manajemen Bengkel HS Motor',
         period: '2025',
-        image: '/images/hsmotor.png',
+        image: '/images/hsmotor.jpg',
         desc: 'Workshop management system with service scheduling, spare part tracking, and finance reports.'
       },
       {
@@ -56,6 +99,15 @@ const folders = [
 
 export default function Experience() {
   const [activeFolder, setActiveFolder] = useState<number | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)')
+    const update = () => setIsMobile(mq.matches)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
 
   return (
     <section id="experience" className="relative py-24 md:py-32 px-4 md:px-6 overflow-hidden bg-surface/30">
@@ -67,23 +119,48 @@ export default function Experience() {
           <p className="section-label mb-4">02 — Experience</p>
         </RevealUp>
 
-        <RevealUp delay={0.1}>
-          <h2 className="display-font text-4xl md:text-6xl font-bold text-text mb-14 md:mb-16">
-            Work <span className="text-accent">History</span>
-          </h2>
+        <MaskReveal
+          className="display-font text-4xl md:text-6xl font-bold text-text mb-14 md:mb-16"
+          lines={[<>Work <span className="text-accent">History</span></>]}
+        />
+
+        {/* Company roles at a glance, so nobody has to open a folder to see them */}
+        <RevealUp delay={0.15}>
+          <ol className="max-w-3xl mx-auto text-left border-t border-border mb-16 md:mb-20">
+            {folders[0].items.map((item) => (
+              <li
+                key={`${item.title}-${item.role}`}
+                className="grid grid-cols-1 md:grid-cols-[150px_1fr_auto] gap-1 md:gap-6 items-baseline border-b border-border py-4 md:py-5"
+              >
+                <span className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-accent">
+                  {item.period}
+                </span>
+                <span className="display-font text-lg md:text-xl font-bold text-text">
+                  {item.role}
+                </span>
+                <span className="font-mono text-xs md:text-sm text-text-dim">
+                  {item.project ? `${item.title} · ${item.project}` : item.title}
+                </span>
+              </li>
+            ))}
+          </ol>
         </RevealUp>
 
-        <div className="flex justify-center gap-10 md:gap-24 flex-wrap mb-8">
+        <RevealUp delay={0.2}>
+          <p className="section-label">Open a folder for details</p>
+        </RevealUp>
+
+        <div className="flex justify-center gap-10 md:gap-24 flex-wrap pt-16 md:pt-24 mb-8">
           {folders.map((folder, i) => (
             <div key={i} className="flex flex-col items-center">
               <Folder
-                size={typeof window !== 'undefined' && window.innerWidth < 768 ? 1.15 : 1.5}
+                size={isMobile ? 1.15 : 1.5}
                 color="#e8ff47"
                 isOpen={activeFolder === i}
                 onClick={() => setActiveFolder(activeFolder === i ? null : i)}
                 items={[
                   <span key="1">{folder.title}</span>,
-                  <span key="2">{folder.items.length} Projects</span>,
+                  <span key="2">{folder.items.length} {folder.unit}</span>,
                   <span key="3">Open</span>
                 ]}
               />
@@ -111,7 +188,7 @@ export default function Experience() {
                 {folders[activeFolder].title} Directory
               </h3>
 
-              <div className="max-h-[420px] overflow-y-auto space-y-4 md:space-y-5 pr-1 md:pr-2">
+              <div data-lenis-prevent className="max-h-[420px] overflow-y-auto space-y-4 md:space-y-5 pr-1 md:pr-2">
                 {folders[activeFolder].items.map((item, i) => (
                   <motion.div
                     key={i}
@@ -120,18 +197,24 @@ export default function Experience() {
                     transition={{ delay: i * 0.1 }}
                     className="flex flex-col md:flex-row gap-4 md:gap-5 border border-white/10 bg-black/20 hover:bg-white/5 rounded-2xl p-4 transition-all duration-300 md:hover:translate-x-2"
                   >
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="w-full md:w-28 h-40 md:h-28 object-cover rounded-xl border border-white/10"
-                    />
+                    {item.image ? (
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full md:w-28 h-40 md:h-28 shrink-0 object-cover rounded-xl border border-white/10"
+                      />
+                    ) : (
+                      <div className="w-full md:w-28 h-40 md:h-28 shrink-0 rounded-xl border border-accent/30 bg-accent/5 flex items-center justify-center display-font text-3xl font-bold text-accent">
+                        {item.mark}
+                      </div>
+                    )}
 
                     <div className="text-left">
                       <h4 className="font-bold text-base md:text-lg text-text">
                         {item.title}
                       </h4>
                       <p className="text-[10px] md:text-xs uppercase tracking-widest text-accent mt-1">
-                        {item.period}
+                        {item.role ? `${item.role} · ${item.period}` : item.period}
                       </p>
                       <p className="text-xs md:text-sm text-text-dim mt-2 md:mt-3 leading-relaxed">
                         {item.desc}

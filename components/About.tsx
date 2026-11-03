@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import { RevealUp } from './RevealUp'
+import MaskReveal from './MaskReveal'
 import Avatar3D from '@/components/Avatar3D'
 
 export default function About() {
@@ -29,31 +30,30 @@ export default function About() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div>
-            <RevealUp>
-              <h2 className="display-font text-5xl md:text-6xl font-bold text-text leading-tight mb-8">
-                Crafting code<br />with <span className="text-accent">purpose</span>
-              </h2>
-            </RevealUp>
+            <MaskReveal
+              className="display-font text-5xl md:text-6xl font-bold text-text leading-tight mb-8"
+              lines={['From requirements', <>to <span className="text-accent">running systems</span></>]}
+            />
 
             <RevealUp delay={0.2}>
               <p className="font-mono text-sm text-text-dim leading-relaxed mb-6">
-                Experienced in Business Analysis, System Analysis, and Full-Stack Development—translating business requirements into clear system workflows and transforming them into scalable digital solutions.
+                I&apos;m a System Analyst at PT Pusaka Nagara, working on IBOZ, the company&apos;s ERP system. Before that I worked at AirNav Indonesia as a Business Analyst on NavEvent and a System Analyst on STREAM, gathering requirements, mapping workflows, and validating features with the dev team.
               </p>
             </RevealUp>
 
             <RevealUp delay={0.3}>
               <p className="font-mono text-sm text-text-dim leading-relaxed mb-8">
-                Bridging logic, design, and development into meaningful systems that solve real operational problems.
+                I also build things myself: on the side I&apos;ve shipped web apps for a car rental, a motorcycle workshop, and a village social-aid program.
               </p>
             </RevealUp>
 
             <RevealUp delay={0.4}>
               <div className="grid grid-cols-2 gap-6">
                 {[
-                  { label: 'Projects', value: '6+' },
-                  { label: 'Experience', value: '1 YR' },
-                  { label: 'Certifications', value: '2+' },
-                  { label: 'Coffee/day', value: '∞' },
+                  { label: 'Projects', value: '10' },
+                  { label: 'Years Experience', value: '1+' },
+                  { label: 'Companies', value: '2' },
+                  { label: 'Certifications', value: '3' },
                 ].map(({ label, value }, i) => (
                   <motion.div
                     key={label}

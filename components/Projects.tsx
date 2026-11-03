@@ -1,91 +1,143 @@
 'use client'
 import { motion, AnimatePresence } from 'framer-motion'
 import { RevealUp } from './RevealUp'
+import MaskReveal from './MaskReveal'
 import { useState, useEffect } from 'react'
+import { useScrollLock } from './SmoothScroll'
 
-const projects = [
+type Project = {
+  title: string
+  desc: string
+  tags: string[]
+  link: string
+  images: string[]
+}
+
+const projectList: Project[] = [
   {
-    number: '01',
+    title: 'IBOZ ERP System',
+    desc: 'ERP system at PT Pusaka Nagara. As System Analyst I analyze business processes across departments, write system specifications, and validate features with the Django development team.',
+    tags: ['Django'],
+    link: '',
+    images: [],
+  },
+  {
+    title: 'Wedding Invitation Website',
+    desc: 'Digital wedding invitation website for sharing the couple\'s details and event information with guests.',
+    tags: [],
+    link: '',
+    images: [],
+  },
+  {
+    title: 'UI/UX Design Jentre NET',
+    desc: 'UI/UX design for Jentre NET, from user flow to high-fidelity screens.',
+    tags: ['Figma'],
+    link: '',
+    images: [],
+  },
+  {
+    title: 'Cetak Barcode PT KMI',
+    desc: 'Barcode printing application for PT KMI.',
+    tags: [],
+    link: '',
+    images: [],
+  },
+  {
     title: 'Rental Mobil Transbulevard',
-    desc: 'Membuat website untuk rental mobil menggunakan Next.js, Tailwind CSS, dan Firebase. Fitur termasuk pemesanan online, manajemen armada, dan',
+    desc: 'Car rental website with online booking, fleet management, and an admin dashboard for the rental owner.',
     tags: ['PHP', 'JavaScript', 'MySQL'],
-    link: '#',
-    color: '#e8ff47',
+    link: '',
     images: [
-      '/images/mockup_rental.png',
+      '/images/mockup_rental.jpg',
+      '/images/transbulevard.jpg',
     ],
   },
   {
-    number: '02',
     title: 'Technical Documentation App Stream',
-    desc: 'Creatingtechnical documentation for Operasional Division of AirNav Indonesia using PHP, Node.js, and MySQL. Features include document management, version control, and user access levels.',
+    desc: 'Technical documentation app for the Operations Division of AirNav Indonesia, built with PHP, Node.js, and MySQL. Covers document management, version control, and role-based access.',
     tags: ['CI', 'Node.js', 'MySQL', 'PHP'],
-    link: '#',
-    color: '#3effee',
+    link: '',
     images: [
       '/images/techdoc_stream.png',
     ],
   },
   {
-    number: '03',
     title: 'Business Analyst App NavEvent',
-    desc: 'Creating documentation for Business Analyst App NavEvent for Internal Company Application of AirNav Indonesia using Laravel, React.js, and MySQL. Features include document management, user requirements analysis, and stakeholder communication.',
+    desc: 'Business analysis for NavEvent, an internal event reporting app at AirNav Indonesia (Laravel, React, MySQL). Gathered user requirements, documented workflows, and kept stakeholders and developers aligned.',
     tags: ['React.js', 'Laravel', 'MySQL'],
-    link: '#',
-    color: '#3effee',
+    link: '',
     images: [
-      '/images/navevent.png',
+      '/images/navevent.jpg',
     ],
   },
     {
-    number: '04',
     title: 'Manajemen Bengkel HS Motor',
-    desc: 'Creating Website for HS Motor Workshop Management using PHP, JavaScript, and MySQL. Features include service scheduling, customer management, and financial reporting.',
+    desc: 'Workshop management system for HS Motor, built with PHP, JavaScript, and MySQL. Handles service scheduling, customer records, and financial reports.',
     tags: ['PHP', 'JavaScript', 'MySQL'],
-    link: '#',
-    color: '#3effee',
+    link: '',
     images: [
-      '/images/mockup_hsmotor.png',
+      '/images/mockup_hsmotor.jpg',
     ],
   },
   {
-    number: '05',
     title: 'SPK Dana Bansos Desa Sukamaju',
-    desc: 'Creating Website for Decision Support System for Social Assistance Fund Distribution in Sukamaju Village using PHP, JavaScript, and MySQL. Features include recipient data analysis, distribution visualization, and fund allocation recommendations.',
+    desc: 'Decision support system for distributing social assistance funds in Sukamaju Village, built with PHP, JavaScript, and MySQL. Scores recipients, visualizes distribution, and recommends allocations.',
     tags: ['PHP', 'JavaScript', 'MySQL'],
-    link: '#',
-    color: '#3effee',
+    link: '',
     images: [
-      '/images/mockup_spk.png',
+      '/images/mockup_spk.jpg',
     ],
   },
   {
-    number: '06',
     title: 'UI/UX Design for App Kenapa Bandung?',
-    desc: 'Creating UI/UX design for the Kenapa Bandung? app using Figma. Features include an attractive interface design, intuitive user experience, and interactive prototypes.',
+    desc: 'Mobile app UI/UX for Kenapa Bandung?, a Bandung tourism guide. Designed in Figma, from wireframes to an interactive prototype.',
     tags: ['Figma'],
-    link: '#',
-    color: '#3effee',
+    link: '',
     images: [
-      '/images/kenapabandung.png',
+      '/images/kenapabandung.jpg',
     ],
   },
 ]
 
+const projects = projectList.map((p, i) => ({ ...p, number: String(i + 1).padStart(2, '0') }))
+
+// Projects without a screenshot yet get a typographic cover instead of a broken image
+function Cover({ project, className }: { project: (typeof projects)[number]; className: string }) {
+  if (project.images[0]) {
+    return (
+      <motion.img
+        src={project.images[0]}
+        alt={project.title}
+        layoutId={`image-${project.number}`}
+        className={`${className} object-cover`}
+      />
+    )
+  }
+  return (
+    <motion.div
+      layoutId={`image-${project.number}`}
+      className={`${className} relative flex items-end p-6 bg-bg grid-bg border-b border-border overflow-hidden`}
+    >
+      <span className="absolute -right-4 -top-10 display-font text-[9rem] font-bold leading-none text-accent/10 select-none">
+        {project.number}
+      </span>
+      <span className="relative display-font text-2xl font-bold text-accent leading-tight max-w-[80%]">
+        {project.title}
+      </span>
+    </motion.div>
+  )
+}
+
 export default function Projects() {
-  const [active, setActive] = useState<null | typeof projects[0]>(null)
+  const [active, setActive] = useState<null | (typeof projects)[number]>(null)
 
-  // 🔥 LOCK BODY SCROLL
+  useScrollLock(active !== null)
+
   useEffect(() => {
-    if (active) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'auto'
-    }
-
-    return () => {
-      document.body.style.overflow = 'auto'
-    }
+    if (!active) return
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setActive(null)
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
   }, [active])
 
   return (
@@ -96,11 +148,10 @@ export default function Projects() {
           <p className="section-label mb-4">04 — Projects</p>
         </RevealUp>
 
-        <RevealUp delay={0.1}>
-          <h2 className="display-font text-5xl md:text-6xl font-bold text-text mb-16">
-            Selected <span className="text-accent">Work</span>
-          </h2>
-        </RevealUp>
+        <MaskReveal
+          className="display-font text-5xl md:text-6xl font-bold text-text mb-16"
+          lines={[<>Selected <span className="text-accent">Work</span></>]}
+        />
 
         {/* GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -111,14 +162,11 @@ export default function Projects() {
               onClick={() => setActive(project)}
               className="cursor-pointer border border-border overflow-hidden bg-surface hover:border-accent/40 transition-all"
             >
-              <motion.img
-                src={project.images[0]}
-                layoutId={`image-${project.number}`}
-                className="w-full h-60 object-cover"
-              />
+              <Cover project={project} className="w-full h-60" />
 
               <div className="p-6">
-                <h3 className="text-lg font-bold">{project.title}</h3>
+                <p className="font-mono text-[10px] text-accent/70 mb-2">{project.number}</p>
+                <h3 className="display-font text-lg font-bold">{project.title}</h3>
                 <p className="text-xs text-text-dim mt-2 line-clamp-2">
                   {project.desc}
                 </p>
@@ -150,25 +198,21 @@ export default function Projects() {
                 {/* CLOSE BUTTON */}
                 <button
                   onClick={() => setActive(null)}
-                  className="absolute top-4 right-4 text-text-dim hover:text-white text-xl z-10"
+                  aria-label="Close"
+                  className="absolute top-4 right-4 w-9 h-9 flex items-center justify-center bg-black/60 text-text-dim hover:text-white text-lg z-10"
                 >
                   ✕
                 </button>
 
-                {/* SCROLL AREA (INI KUNCI NYA) */}
-                <div className="overflow-y-auto flex-1">
+                <div data-lenis-prevent className="overflow-y-auto flex-1">
 
                   {/* IMAGE */}
-                  <motion.img
-                    src={active.images[0]}
-                    layoutId={`image-${active.number}`}
-                    className="w-full h-64 object-cover"
-                  />
+                  <Cover project={active} className="w-full h-64" />
 
                   <div className="p-6">
 
                     {/* TITLE */}
-                    <h2 className="text-2xl font-bold mb-4">
+                    <h2 className="display-font text-2xl font-bold mb-4">
                       {active.title}
                     </h2>
 
@@ -177,45 +221,50 @@ export default function Projects() {
                       {active.desc}
                     </p>
 
-                    {/* TECH STACK */}
-                    <div className="mb-6">
-                      <p className="text-xs mb-2 text-text-dim uppercase tracking-widest">
-                        Tech Stack
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {active.tags.map(tag => (
-                          <span
-                            key={tag}
-                            className="text-xs px-3 py-1 border border-accent/30 text-accent rounded-full"
-                          >
-                            {tag}
-                          </span>
+                    {active.tags.length > 0 && (
+                      <div className="mb-6">
+                        <p className="text-xs mb-2 text-text-dim uppercase tracking-widest">
+                          Tech Stack
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {active.tags.map(tag => (
+                            <span
+                              key={tag}
+                              className="text-xs px-3 py-1 border border-accent/30 text-accent rounded-full"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {active.images.length > 1 && (
+                      <div className="space-y-4 mb-8">
+                        {active.images.slice(1).map((img, i) => (
+                          <motion.img
+                            key={i}
+                            src={img}
+                            alt={`${active.title} screenshot ${i + 2}`}
+                            className="w-full rounded-md object-cover"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: i * 0.1 }}
+                          />
                         ))}
                       </div>
-                    </div>
+                    )}
 
-                    {/* GALLERY */}
-                    <div className="space-y-4 mb-8">
-                      {active.images.slice(1).map((img, i) => (
-                        <motion.img
-                          key={i}
-                          src={img}
-                          className="w-full rounded-md object-cover"
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: i * 0.1 }}
-                        />
-                      ))}
-                    </div>
-
-                    {/* BUTTON */}
-                    <a
-                      href={active.link}
-                      target="_blank"
-                      className="inline-flex items-center gap-2 px-6 py-3 border border-accent text-accent font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-bg transition-all"
-                    >
-                      Visit Website →
-                    </a>
+                    {active.link && (
+                      <a
+                        href={active.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-6 py-3 border border-accent text-accent font-mono text-xs uppercase tracking-widest hover:bg-accent hover:text-bg transition-all"
+                      >
+                        Visit Website →
+                      </a>
+                    )}
 
                   </div>
                 </div>

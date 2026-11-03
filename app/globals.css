@@ -1,13 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --font-display: 'Syne', sans-serif;
-  --font-mono: 'Space Mono', monospace;
-}
 
 * {
   box-sizing: border-box;
@@ -17,6 +10,10 @@
 
 html {
   scroll-behavior: auto; /* handled by lenis */
+}
+
+html[data-intro-seen] .intro-overlay {
+  display: none;
 }
 
 body {
@@ -138,9 +135,9 @@ body {
   animation: glitch2 3s infinite linear;
   opacity: 0.6;
 }
-canvas{
-    width:100%!important;
-    height:100%!important;
+canvas {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* Typewriter cursor */
@@ -150,4 +147,13 @@ canvas{
 }
 .cursor-blink {
   animation: blink 1s step-end infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glitch::before,
+  .glitch::after,
+  .marquee-track,
+  .cursor-blink {
+    animation: none;
+  }
 }
