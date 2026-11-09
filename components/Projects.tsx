@@ -19,21 +19,27 @@ const projectList: Project[] = [
     desc: 'ERP system at PT Pusaka Nagara. As System Analyst I analyze business processes across departments, write system specifications, and validate features with the Django development team.',
     tags: ['Django'],
     link: '',
-    images: [],
+    images: [
+      '/images/iboz.jpg',
+    ],
   },
   {
     title: 'Wedding Invitation Website',
     desc: 'Digital wedding invitation website for sharing the couple\'s details and event information with guests.',
     tags: [],
     link: '',
-    images: [],
+    images: [
+      '/images/invitation.jpg',
+    ],
   },
   {
     title: 'UI/UX Design Jentre NET',
     desc: 'UI/UX design for Jentre NET, from user flow to high-fidelity screens.',
     tags: ['Figma'],
     link: '',
-    images: [],
+    images: [
+      '/images/jentrenet.jpg',
+    ],
   },
   {
     title: 'Cetak Barcode PT KMI',
